@@ -66,8 +66,9 @@ export default function Navbar() {
         {/* CTA */}
         <div className="hidden md:flex items-center gap-3">
           <a
-            href="#demo"
-            onClick={(e) => scrollToElement("demo", e)}
+            href="https://app.fabsimpleus.com"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
           >
             Sign in
@@ -117,11 +118,10 @@ export default function Navbar() {
               ))}
               <div className="pt-3 border-t border-zinc-100 mt-3 flex flex-col gap-2">
                 <a
-                  href="#demo"
-                  onClick={(e) => {
-                    setMobileOpen(false);
-                    scrollToElement("demo", e);
-                  }}
+                  href="https://app.fabsimpleus.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileOpen(false)}
                   className="block px-4 py-2.5 text-sm font-medium text-zinc-600"
                 >
                   Sign in
