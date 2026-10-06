@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, ArrowRight, CheckCircle } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight, CheckCircle, Loader2 } from "lucide-react";
 
 export default function CtaSection() {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -14,9 +17,44 @@ export default function CtaSection() {
     detailingSoftware: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.hash === "#demo") {
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      const response = await fetch("/api/schedule-demo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Unable to submit your request at this time. Please try again.");
+      }
+
+      setSubmitted(true);
+
+      // Clean up hash from URL immediately upon submission
+      if (typeof window !== "undefined" && window.location.hash) {
+        window.history.replaceState(null, "", window.location.pathname + window.location.search);
+      }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "An unexpected error occurred. Please try again.";
+      setErrorMessage(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -88,11 +126,40 @@ export default function CtaSection() {
                 <p className="text-zinc-500 text-sm mt-2 leading-relaxed">
                   A FabSimple structural fabrication specialist will reach out within one business day to coordinate the live session.
                 </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSubmitted(false);
+                    if (typeof window !== "undefined" && window.location.hash) {
+                      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+                    }
+                    setForm({
+                      name: "",
+                      email: "",
+                      company: "",
+                      tonnage: "",
+                      detailingSoftware: "",
+                    });
+                  }}
+                  className="mt-6 text-xs text-zinc-500 hover:text-zinc-900 underline font-medium transition"
+                >
+                  Submit another request
+                </button>
               </div>
             ) : (
               <>
                 <h3 className="text-xl font-bold text-zinc-900 mb-6">Schedule Your Shop Demo</h3>
                 <form id="demo-form" onSubmit={handleSubmit} className="space-y-4">
+                  {errorMessage && (
+                    <div
+                      id="demo-form-error"
+                      role="alert"
+                      className="p-3 bg-zinc-100 border border-zinc-300 rounded-md text-xs text-zinc-800 leading-relaxed"
+                    >
+                      {errorMessage}
+                    </div>
+                  )}
+
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-zinc-600 mb-1.5" htmlFor="demo-name">
@@ -102,9 +169,10 @@ export default function CtaSection() {
                         id="demo-name"
                         type="text"
                         required
+                        disabled={isSubmitting}
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
-                        className="w-full px-3 py-2.5 text-sm border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition"
+                        className="w-full px-3 py-2.5 text-sm border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition disabled:opacity-50"
                         placeholder="Marcus Webb"
                       />
                     </div>
@@ -116,9 +184,10 @@ export default function CtaSection() {
                         id="demo-email"
                         type="email"
                         required
+                        disabled={isSubmitting}
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        className="w-full px-3 py-2.5 text-sm border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition"
+                        className="w-full px-3 py-2.5 text-sm border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition disabled:opacity-50"
                         placeholder="marcus@meridiansteel.com"
                       />
                     </div>
@@ -131,9 +200,10 @@ export default function CtaSection() {
                       id="demo-company"
                       type="text"
                       required
+                      disabled={isSubmitting}
                       value={form.company}
                       onChange={(e) => setForm({ ...form, company: e.target.value })}
-                      className="w-full px-3 py-2.5 text-sm border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition"
+                      className="w-full px-3 py-2.5 text-sm border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition disabled:opacity-50"
                       placeholder="Meridian Steel Fabricators"
                     />
                   </div>
@@ -144,9 +214,10 @@ export default function CtaSection() {
                       </label>
                       <select
                         id="demo-tonnage"
+                        disabled={isSubmitting}
                         value={form.tonnage}
                         onChange={(e) => setForm({ ...form, tonnage: e.target.value })}
-                        className="w-full px-3 py-2.5 text-sm border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition"
+                        className="w-full px-3 py-2.5 text-sm border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition disabled:opacity-50"
                       >
                         <option value="">Select volume</option>
                         <option value="under200">Under 200 tons/mo</option>
@@ -161,9 +232,10 @@ export default function CtaSection() {
                       </label>
                       <select
                         id="demo-software"
+                        disabled={isSubmitting}
                         value={form.detailingSoftware}
                         onChange={(e) => setForm({ ...form, detailingSoftware: e.target.value })}
-                        className="w-full px-3 py-2.5 text-sm border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition"
+                        className="w-full px-3 py-2.5 text-sm border border-zinc-300 rounded-md bg-zinc-50 text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition disabled:opacity-50"
                       >
                         <option value="">Select software</option>
                         <option value="tekla">Tekla Structures</option>
@@ -176,10 +248,20 @@ export default function CtaSection() {
                   <button
                     type="submit"
                     id="demo-submit"
-                    className="w-full py-3.5 bg-zinc-900 text-white text-sm font-semibold rounded-md hover:bg-zinc-700 transition-colors flex items-center justify-center gap-2"
+                    disabled={isSubmitting}
+                    className="w-full py-3.5 bg-zinc-900 text-white text-sm font-semibold rounded-md hover:bg-zinc-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    Request My Walkthrough
-                    <ArrowRight size={16} />
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 size={16} className="animate-spin text-zinc-300" />
+                        <span>Sending Request...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Request My Walkthrough</span>
+                        <ArrowRight size={16} />
+                      </>
+                    )}
                   </button>
                   <p className="text-center text-xs text-zinc-400">
                     No generic pitch decks. We evaluate your actual shop workflow and demonstrate real functionality.

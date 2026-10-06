@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { scrollToElement } from "@/lib/utils";
 
 const navLinks = [
   { label: "Why FabSimple", href: "#features" },
@@ -53,6 +54,7 @@ export default function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
+                onClick={(e) => scrollToElement(link.href.replace("#", ""), e)}
                 className="px-4 py-2 text-sm font-medium text-zinc-600 hover:text-zinc-900 rounded-md hover:bg-zinc-100 transition-all duration-150"
               >
                 {link.label}
@@ -65,12 +67,14 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-3">
           <a
             href="#demo"
+            onClick={(e) => scrollToElement("demo", e)}
             className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
           >
             Sign in
           </a>
           <a
             href="#demo"
+            onClick={(e) => scrollToElement("demo", e)}
             className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold bg-zinc-900 text-white rounded-md hover:bg-zinc-700 transition-colors"
           >
             Book a Demo
@@ -102,19 +106,32 @@ export default function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => {
+                    setMobileOpen(false);
+                    scrollToElement(link.href.replace("#", ""), e);
+                  }}
                   className="block px-4 py-2.5 text-sm font-medium text-zinc-700 rounded-md hover:bg-zinc-50"
                 >
                   {link.label}
                 </a>
               ))}
               <div className="pt-3 border-t border-zinc-100 mt-3 flex flex-col gap-2">
-                <a href="#demo" onClick={() => setMobileOpen(false)} className="block px-4 py-2.5 text-sm font-medium text-zinc-600">
+                <a
+                  href="#demo"
+                  onClick={(e) => {
+                    setMobileOpen(false);
+                    scrollToElement("demo", e);
+                  }}
+                  className="block px-4 py-2.5 text-sm font-medium text-zinc-600"
+                >
                   Sign in
                 </a>
                 <a
                   href="#demo"
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => {
+                    setMobileOpen(false);
+                    scrollToElement("demo", e);
+                  }}
                   className="block px-4 py-2.5 text-sm font-semibold bg-zinc-900 text-white rounded-md text-center"
                 >
                   Book a Demo
@@ -127,3 +144,4 @@ export default function Navbar() {
     </header>
   );
 }
+

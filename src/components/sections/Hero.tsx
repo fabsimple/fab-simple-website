@@ -2,6 +2,7 @@
 
 import { motion, type Variants } from "framer-motion";
 import { ArrowRight, Play, Award, QrCode, CheckCircle2 } from "lucide-react";
+import { scrollToElement } from "@/lib/utils";
 
 const stats = [
   { value: "500+", label: "Structural Fabricators" },
@@ -83,6 +84,7 @@ export default function Hero() {
             <a
               href="#demo"
               id="hero-cta-demo"
+              onClick={(e) => scrollToElement("demo", e)}
               className="inline-flex items-center gap-2 px-6 py-3.5 bg-zinc-900 text-white text-sm font-semibold rounded-md hover:bg-zinc-700 transition-all duration-200 shadow-sm group"
             >
               Book a Shop Walkthrough
@@ -91,6 +93,7 @@ export default function Hero() {
             <a
               href="#modules"
               id="hero-cta-features"
+              onClick={(e) => scrollToElement("modules", e)}
               className="inline-flex items-center gap-2 px-6 py-3.5 bg-white text-zinc-700 text-sm font-semibold rounded-md border border-zinc-300 hover:bg-zinc-50 hover:border-zinc-400 transition-all duration-200"
             >
               <Play size={14} className="fill-zinc-500 text-zinc-500" />

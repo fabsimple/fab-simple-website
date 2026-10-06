@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { scrollToElement } from "@/lib/utils";
 
 const integrations = [
   { name: "Tekla Structures", category: "BOM & 3D Detailing" },
@@ -88,7 +89,11 @@ export default function Integrations() {
           className="text-center text-sm text-zinc-400 mt-8"
         >
           Have proprietary CNC saw machinery or custom accounting?{" "}
-          <a href="#demo" className="text-zinc-700 underline underline-offset-2 hover:text-zinc-900 font-medium">
+          <a
+            href="#demo"
+            onClick={(e) => scrollToElement("demo", e)}
+            className="text-zinc-700 underline underline-offset-2 hover:text-zinc-900 font-medium"
+          >
             Ask our engineering team about direct machinery &amp; API integrations
           </a>
         </motion.p>
