@@ -1,13 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, ArrowRight, CheckCircle, Loader2 } from "lucide-react";
+import Turnstile from "@/components/ui/Turnstile";
 
 export default function CtaSection() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+  const resetTurnstileRef = useRef<(() => void) | null>(null);
 
   const [form, setForm] = useState({
     name: "",
@@ -25,6 +29,12 @@ export default function CtaSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!turnstileToken) {
+      setErrorMessage("Please complete the security check.");
+      return;
+    }
+
     setIsSubmitting(true);
     setErrorMessage(null);
 
@@ -34,7 +44,11 @@ export default function CtaSection() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          turnstileToken,
+          website: honeypot,
+        }),
       });
 
       const data = await response.json();
@@ -44,6 +58,7 @@ export default function CtaSection() {
       }
 
       setSubmitted(true);
+      setTurnstileToken("");
 
       // Clean up hash from URL immediately upon submission
       if (typeof window !== "undefined" && window.location.hash) {
@@ -52,6 +67,9 @@ export default function CtaSection() {
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "An unexpected error occurred. Please try again.";
       setErrorMessage(message);
+      // Reset Turnstile on error so user can re-verify
+      resetTurnstileRef.current?.();
+      setTurnstileToken("");
     } finally {
       setIsSubmitting(false);
     }
@@ -130,6 +148,8 @@ export default function CtaSection() {
                   type="button"
                   onClick={() => {
                     setSubmitted(false);
+                    setTurnstileToken("");
+                    resetTurnstileRef.current?.();
                     if (typeof window !== "undefined" && window.location.hash) {
                       window.history.replaceState(null, "", window.location.pathname + window.location.search);
                     }
@@ -245,11 +265,46 @@ export default function CtaSection() {
                       </select>
                     </div>
                   </div>
+
+                  {/* Honeypot field for bot trap */}
+                  <div className="hidden" aria-hidden="true" style={{ display: "none" }}>
+                    <label htmlFor="hp-website">Website</label>
+                    <input
+                      id="hp-website"
+                      type="text"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                    />
+                  </div>
+
+                  {/* Cloudflare Turnstile CAPTCHA */}
+                  <div className="pt-2 flex justify-center">
+                    <Turnstile
+                      onSuccess={(token) => {
+                        setTurnstileToken(token);
+                        setErrorMessage(null);
+                      }}
+                      onError={() => {
+                        setTurnstileToken("");
+                      }}
+                      onExpire={() => {
+                        setTurnstileToken("");
+                      }}
+                      onResetReady={(resetFn) => {
+                        resetTurnstileRef.current = resetFn;
+                      }}
+                      theme="light"
+                    />
+                  </div>
+
                   <button
                     type="submit"
                     id="demo-submit"
-                    disabled={isSubmitting}
-                    className="w-full py-3.5 bg-zinc-900 text-white text-sm font-semibold rounded-md hover:bg-zinc-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                    disabled={isSubmitting || !turnstileToken}
+                    className="w-full py-3.5 bg-zinc-900 text-white text-sm font-semibold rounded-md hover:bg-zinc-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? (
                       <>
@@ -263,6 +318,7 @@ export default function CtaSection() {
                       </>
                     )}
                   </button>
+
                   <p className="text-center text-xs text-zinc-400">
                     No generic pitch decks. We evaluate your actual shop workflow and demonstrate real functionality.
                   </p>
