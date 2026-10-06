@@ -6,10 +6,10 @@ import { Menu, X, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 const navLinks = [
-  { label: "Features", href: "#features" },
-  { label: "How It Works", href: "#how-it-works" },
+  { label: "Why FabSimple", href: "#features" },
   { label: "Modules", href: "#modules" },
-  { label: "Testimonials", href: "#testimonials" },
+  { label: "How It Works", href: "#how-it-works" },
+  { label: "Customer Stories", href: "#testimonials" },
   { label: "Pricing", href: "#pricing" },
 ];
 
@@ -31,9 +31,9 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between" aria-label="Main Navigation">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
+        <Link href="/" className="flex items-center gap-2 group" aria-label="FabSimple Home">
           <div className="w-8 h-8 bg-zinc-900 rounded-sm flex items-center justify-center">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <rect x="2" y="2" width="6" height="6" fill="white" opacity="0.9" />
@@ -64,7 +64,7 @@ export default function Navbar() {
         {/* CTA */}
         <div className="hidden md:flex items-center gap-3">
           <a
-            href="#contact"
+            href="#demo"
             className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
           >
             Sign in
@@ -82,7 +82,7 @@ export default function Navbar() {
         <button
           className="md:hidden p-2 rounded-md text-zinc-600 hover:bg-zinc-100"
           onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
         >
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
@@ -109,11 +109,12 @@ export default function Navbar() {
                 </a>
               ))}
               <div className="pt-3 border-t border-zinc-100 mt-3 flex flex-col gap-2">
-                <a href="#contact" className="block px-4 py-2.5 text-sm font-medium text-zinc-600">
+                <a href="#demo" onClick={() => setMobileOpen(false)} className="block px-4 py-2.5 text-sm font-medium text-zinc-600">
                   Sign in
                 </a>
                 <a
                   href="#demo"
+                  onClick={() => setMobileOpen(false)}
                   className="block px-4 py-2.5 text-sm font-semibold bg-zinc-900 text-white rounded-md text-center"
                 >
                   Book a Demo

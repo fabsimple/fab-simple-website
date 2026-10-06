@@ -3,171 +3,169 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Calculator,
-  DollarSign,
-  Package,
-  Factory,
-  ShoppingCart,
-  Smartphone,
-  BarChart3,
   GitBranch,
+  ShieldCheck,
+  Smartphone,
+  CheckCircle,
+  Scissors,
+  Truck,
 } from "lucide-react";
 
 const modules = [
   {
-    id: "estimating",
-    icon: Calculator,
-    label: "Estimating",
-    tagline: "Win more bids without sacrificing margins.",
+    id: "bom-intake",
+    icon: GitBranch,
+    label: "BOM & Drawing Control",
+    tagline: "Automated Tekla & SDS/2 intake with revision diffing.",
     description:
-      "Build precise takeoffs from 3D models or 2D drawings, apply real-time material pricing, and generate professional quotes in minutes — not days.",
+      "Import CSV model exports directly from Tekla Structures and SDS/2. FabSimple automatically parses piece marks, profiles (W-shapes, HSS, channels, plates), flags mill length overruns, and manages drawing revisions so you never cut to superseded plans.",
     features: [
-      "Model-based takeoff from Tekla Structures & SDS/2",
-      "Real-time material price integration",
-      "Labor rate templates by work center",
-      "Revision tracking & bid history",
-      "Quote-to-job conversion in one click",
+      "Tekla Structures, SDS/2, and KISS CSV import",
+      "Automated revision diffing (Rev A vs Rev B additions & edits)",
+      "Drawing register with auto-superseding logic",
+      "Mill length overrun (e.g. 60ft limit) & weight checks",
+      "Assembly and sub-part mark hierarchy breakdown",
     ],
     preview: {
-      title: "Estimate #EST-2841",
+      title: "Tekla Model BOM Intake — Rev D",
       items: [
-        { label: "W-Shapes (A992)", qty: "142 pcs", weight: "48,220 lbs", cost: "$72,330" },
-        { label: "HSS Columns", qty: "38 pcs", weight: "9,118 lbs", cost: "$16,890" },
-        { label: "Base Plates", qty: "38 pcs", weight: "2,204 lbs", cost: "$5,510" },
-        { label: "Bolts & Hardware", qty: "—", weight: "—", cost: "$4,200" },
-        { label: "Fabrication Labor", qty: "—", weight: "—", cost: "$38,600" },
+        { label: "W14x82 (A992)", qty: "48 pcs", weight: "24.5 ft", cost: "Validated" },
+        { label: "HSS6x6x3/8", qty: "36 pcs", weight: "18.0 ft", cost: "Validated" },
+        { label: "PL 1\"x12\" Base", qty: "36 pcs", weight: "2.3 ft", cost: "2D CNC Plasma" },
+        { label: "Splice Plate SP-1", qty: "72 pcs", weight: "1.1 ft", cost: "Rev D Added" },
+        { label: "W12x26 Mill Check", qty: "12 pcs", weight: "62.0 ft", cost: "Splice Flag" },
       ],
-      total: "$137,530",
+      total: "214 Lines Parsed · 0 Fatal Errors",
     },
   },
   {
-    id: "jobcosting",
-    icon: DollarSign,
-    label: "Job Costing",
-    tagline: "Know exactly where every dollar goes.",
+    id: "traceability",
+    icon: ShieldCheck,
+    label: "Material & Heat Traceability",
+    tagline: "AISC 303 compliance from receiving to erection.",
     description:
-      "Track estimated vs. actual costs at the job, phase, or operation level. Catch margin bleed early — not after the job ships.",
+      "Lock mill heat numbers, vendor purchase orders, and Mill Test Report (MTR) documents directly to piece marks. Handle multi-heat shipment splits and remnant drops with zero gaps in your material genealogy.",
     features: [
-      "Estimated vs. actual variance dashboard",
-      "Per-operation labor cost tracking",
-      "Material usage vs. purchased reconciliation",
-      "Overhead allocation rules",
-      "Profitability forecasting",
+      "Hard-locked heat number to piece mark linkage",
+      "Receiving heat splits (multiple heats per PO delivery)",
+      "Indexed Mill Test Report (MTR) document vault",
+      "ASTM grades: A992, A500 Gr B/C, A36, A572 Gr 50",
+      "1-click AISC 303 quality audit binder export",
     ],
     preview: {
-      title: "Job Cost Summary — JB-4821",
+      title: "Material Receiving & Heat Split #REC-409",
       items: [
-        { label: "Material (Est)", qty: "—", weight: "—", cost: "$98,730" },
-        { label: "Material (Act)", qty: "—", weight: "—", cost: "$94,210" },
-        { label: "Labor (Est)", qty: "—", weight: "—", cost: "$38,600" },
-        { label: "Labor (Act)", qty: "—", weight: "—", cost: "$41,850" },
-        { label: "Overhead", qty: "—", weight: "—", cost: "$12,400" },
+        { label: "Heat #A1123456", qty: "22,000 lbs", weight: "Yard-B4", cost: "MTR Attached" },
+        { label: "Heat #A1123890", qty: "12,500 lbs", weight: "Yard-B4", cost: "MTR Attached" },
+        { label: "Heat #A1124017", qty: "5,500 lbs", weight: "Yard-B2", cost: "MTR Attached" },
+        { label: "Drop #D-1042 (Remnant)", qty: "248 lbs", weight: "Rack-01", cost: "A992 Logged" },
+        { label: "PO-4471 Steel Delivery", qty: "40,000 lbs", weight: "Nucor", cost: "PO Matched" },
       ],
-      total: "$148,460 / $149,330 est.",
-    },
-  },
-  {
-    id: "production",
-    icon: Factory,
-    label: "Production Control",
-    tagline: "Orchestrate the shop floor with precision.",
-    description:
-      "Sequence fabrication work by work center, assign tasks to crews, and track real-time progress against your production schedule.",
-    features: [
-      "Visual Gantt production schedule",
-      "Work center capacity planning",
-      "Operation routing templates",
-      "Piece mark status tracking",
-      "Drawing & revision management",
-    ],
-    preview: {
-      title: "Production Schedule — Week 38",
-      items: [
-        { label: "Cutting", qty: "Complete", weight: "48,220 lbs", cost: "100%" },
-        { label: "Fitting & Assembly", qty: "In Progress", weight: "32,100 lbs", cost: "67%" },
-        { label: "Welding", qty: "In Progress", weight: "18,440 lbs", cost: "38%" },
-        { label: "Painting", qty: "Queued", weight: "0 lbs", cost: "0%" },
-        { label: "Shipping", qty: "Queued", weight: "—", cost: "0%" },
-      ],
-      total: "Overall: 61% Complete",
-    },
-  },
-  {
-    id: "inventory",
-    icon: Package,
-    label: "Inventory & Material",
-    tagline: "Zero stock-outs. Full traceability.",
-    description:
-      "Manage heat numbers, remnant tracking, and material reservations across multiple storage locations with AISC-compliant traceability.",
-    features: [
-      "Heat number & MTR tracking",
-      "Remnant (drop) inventory management",
-      "Material reservations by job",
-      "Multi-location warehouse support",
-      "Cycle count & physical inventory",
-    ],
-    preview: {
-      title: "Material Inventory Snapshot",
-      items: [
-        { label: "W8x31 (A992)", qty: "24 pcs", weight: "6,024 lbs", cost: "Heat: 4A8221" },
-        { label: "W12x53 (A992)", qty: "18 pcs", weight: "9,504 lbs", cost: "Heat: 4B1102" },
-        { label: "HSS 6x6x1/2", qty: "36 pcs", weight: "7,956 lbs", cost: "Heat: 5C0381" },
-        { label: "PL 1\" x 12\"", qty: "Remnant", weight: "248 lbs", cost: "Drop #1042" },
-        { label: "A325 Bolts 3/4\"", qty: "4,800", weight: "—", cost: "In Stock" },
-      ],
-      total: "Total Inventory: $284,420",
-    },
-  },
-  {
-    id: "purchasing",
-    icon: ShoppingCart,
-    label: "Purchasing",
-    tagline: "Buy smarter, receive faster.",
-    description:
-      "Generate material requisitions automatically from job requirements, manage vendor quotes, and streamline PO approval workflows.",
-    features: [
-      "Auto-requisition from job BOM",
-      "Vendor quote comparison",
-      "PO approval workflows",
-      "Receiving & inspection logging",
-      "Vendor performance tracking",
-    ],
-    preview: {
-      title: "Purchase Orders — Open",
-      items: [
-        { label: "Nucor Skyline — Steel", qty: "PO-8821", weight: "68,000 lbs", cost: "$108,000" },
-        { label: "Harris Supply — Bolts", qty: "PO-8822", weight: "—", cost: "$6,400" },
-        { label: "Sherwin-Williams — Paint", qty: "PO-8823", weight: "—", cost: "$4,200" },
-        { label: "Ridge Tool — Hardware", qty: "PO-8824", weight: "—", cost: "$2,100" },
-        { label: "State Steel — Plate", qty: "PO-8825", weight: "12,000 lbs", cost: "$18,600" },
-      ],
-      total: "Total Open: $139,300",
+      total: "100% Heats Matched · Zero Missing MTRs",
     },
   },
   {
     id: "shopfloor",
     icon: Smartphone,
-    label: "Shop Floor Mobile",
-    tagline: "Real-time updates from the shop floor.",
+    label: "Shop Floor Worker PWA",
+    tagline: "Rugged 3-tap mobile routing that works offline.",
     description:
-      "Give your welders, fitters, and QC inspectors a tablet-friendly interface to clock operations, scan piece marks, and log QC results — all offline-capable.",
+      "Equip sawyers, fitters, welders, and painters with an offline-first mobile app. Scan piece mark QR codes on shop tables to verify drawings, view weld symbols, and advance station travelers without touching paper.",
     features: [
-      "Tablet & mobile optimized UI",
-      "Barcode / QR piece mark scanning",
-      "Operation time clock",
-      "QC inspection checklists",
-      "Offline sync capability",
+      "Runs offline in steel bays with automatic background sync",
+      "High-contrast QR barcode scanner on any tablet or phone",
+      "Work centers: Beam Line/Saw, Fit-up, Weld, Paint, Staging",
+      "On-device photo capture for quality exceptions and punch items",
+      "No paper travelers lost or damaged on the floor",
     ],
     preview: {
-      title: "Shop Floor — Live Status",
+      title: "Shop Floor Station Scan — Traveler B12",
       items: [
-        { label: "Bay 1 — Fitting", qty: "3 ops active", weight: "Crew: J. Morris", cost: "On time" },
-        { label: "Bay 2 — Welding", qty: "5 ops active", weight: "Crew: T. Reeves", cost: "On time" },
-        { label: "Bay 3 — Paint Booth", qty: "2 ops active", weight: "Crew: D. Lopez", cost: "Behind 2hr" },
-        { label: "CNC Plate Table", qty: "1 op active", weight: "Operator: R. Kim", cost: "On time" },
-        { label: "Overhead Crane", qty: "Available", weight: "—", cost: "—" },
+        { label: "Piece Mark B12-1", qty: "W14x82", weight: "2,009 lbs", cost: "Scanned QR" },
+        { label: "Drawing DS-101", qty: "Rev D", weight: "Approved", cost: "Active Rev" },
+        { label: "Fit-Up & Tack", qty: "Completed", weight: "M. Smith", cost: "Passed" },
+        { label: "AWS D1.1 Welding", qty: "In Progress", weight: "R. Torres", cost: "Stencil RT04" },
+        { label: "Next: CWI Inspection", qty: "Hold Point", weight: "Station 3", cost: "Queued" },
       ],
-      total: "4 of 5 Work Centers On Schedule",
+      total: "Sync Status: Connected · Live WIP Active",
+    },
+  },
+  {
+    id: "quality",
+    icon: CheckCircle,
+    label: "QC, Weld Log & AISC",
+    tagline: "Automated NCR creation and CWI inspection hold points.",
+    description:
+      "Enforce rigorous quality gates before steel leaves the yard. Track AWS D1.1 structural weld logs with welder stencil stamps, SSPC paint dry film thickness (DFT) gauge readings, and trigger automatic Non-Conformance Reports on failures.",
+    features: [
+      "AWS D1.1 structural welding log with welder stencil tracking",
+      "SSPC / NACE paint dry film thickness (DFT mils) records",
+      "Automated NCR generation with disposition workflows",
+      "AISC 303 quality checklist tied to project milestones",
+      "Certified Welding Inspector (CWI) digital sign-off gates",
+    ],
+    preview: {
+      title: "QC Queue & Hold Point — PRJ-2026-0001",
+      items: [
+        { label: "Asm A-204 (Column)", qty: "Visual Weld", weight: "AWS D1.1", cost: "CWI Pass" },
+        { label: "Welder Stencil #RT-04", qty: "FCAW Grade", weight: "E71T-1M", cost: "Cert Current" },
+        { label: "Primer Blast Profile", qty: "SSPC-SP10", weight: "2.5 mils", cost: "Verified" },
+        { label: "Paint DFT Reading", qty: "3 Spots", weight: "Avg 4.2 mils", cost: "Spec Met" },
+        { label: "Open NCRs", qty: "0 Active", weight: "Disposition", cost: "Clear to Ship" },
+      ],
+      total: "Quality Hold Gate: 100% Cleared for Staging",
+    },
+  },
+  {
+    id: "cut-list",
+    icon: Scissors,
+    label: "Cut List & Saw Optimization",
+    tagline: "Linear 1D nesting that saves up to 18% in bar scrap.",
+    description:
+      "Optimize mill stock lengths and usable drops across all active jobs. Generate linear saw cut lists with kerf compensation, stock drop tagging, and clean separation between saw cuts and 2D CNC plasma burning plates.",
+    features: [
+      "1D linear bar nesting for W-shapes, tubes, and channels",
+      "Usable remnant drop inventory tracking with barcode tags",
+      "Plate separation routed directly to 2D CNC plasma/oxy table",
+      "Kerf width and clamp grip allowance adjustments",
+      "Exports saw cut lists and CNC push feed files",
+    ],
+    preview: {
+      title: "1D Linear Nesting Run — Saw Line 1",
+      items: [
+        { label: "Stock: 60'-0\" W12x26", qty: "Bar #1", weight: "1,560 lbs", cost: "Heat A1120099" },
+        { label: "Piece B12 (24'-6\")", qty: "Cut #1", weight: "637 lbs", cost: "Dallas Tower" },
+        { label: "Piece B14 (22'-0\")", qty: "Cut #2", weight: "572 lbs", cost: "Dallas Tower" },
+        { label: "Piece K02 (8'-4\")", qty: "Cut #3", weight: "216 lbs", cost: "Refinery Job" },
+        { label: "Drop: 4'-8\" Remnant", qty: "Drop Saved", weight: "121 lbs", cost: "Rack-D1" },
+      ],
+      total: "Nest Yield: 97.4% · Scrap: 0.8% (Kerf 5/8\")",
+    },
+  },
+  {
+    id: "billing-erection",
+    icon: Truck,
+    label: "Erection & AIA G702 Billing",
+    tagline: "Trailer load staging and automated progress draws.",
+    description:
+      "Stage outbound piece marks by crane erection sequence and legal trailer weight limits. When steel reaches the jobsite, confirm bolt-up and generate AIA G702 / G703 progress billing backed by real erected tonnage.",
+    features: [
+      "Shipping tickets with automated trailer axle weight checks",
+      "Erection sequence & crane pick prioritization",
+      "Automated AIA G702 / G703 schedule of values draw requests",
+      "Retainage calculations, change orders, and stored materials",
+      "Live General Contractor portal for submittals and deliveries",
+    ],
+    preview: {
+      title: "AIA G702 Application for Payment #03",
+      items: [
+        { label: "Original Contract Sum", qty: "Lump Sum", weight: "320 Tons", cost: "$612,000" },
+        { label: "Approved Change Orders", qty: "CO #1 & #2", weight: "14.5 Tons", cost: "$42,800" },
+        { label: "Total Completed to Date", qty: "64.2%", weight: "214.8 Tons", cost: "$420,380" },
+        { label: "Less Retainage (10%)", qty: "Retention", weight: "Standard", cost: "-$42,038" },
+        { label: "Trailer Load #4 Staged", qty: "20 Pieces", weight: "41,200 lbs", cost: "Ready to Roll" },
+      ],
+      total: "Current Payment Due: $148,460",
     },
   },
 ];
@@ -194,14 +192,14 @@ export default function Modules() {
             <span className="text-zinc-400"> fully connected.</span>
           </h2>
           <p className="mt-4 text-zinc-500 text-lg leading-relaxed">
-            Six integrated modules that cover the complete fabrication lifecycle — from first quote to final delivery.
+            Six purpose-built modules that cover the complete structural steel lifecycle — from Tekla BOM import to field erection and AIA G702 draws.
           </p>
         </motion.div>
 
         {/* Module tabs + content */}
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Tab list */}
-          <div className="lg:col-span-3 flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
+          <div className="lg:col-span-4 flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
             {modules.map((m, i) => {
               const MIcon = m.icon;
               return (
@@ -222,7 +220,7 @@ export default function Modules() {
           </div>
 
           {/* Content panel */}
-          <div className="lg:col-span-9">
+          <div className="lg:col-span-8">
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
@@ -263,12 +261,12 @@ export default function Modules() {
                     <div className="w-2.5 h-2.5 rounded-full bg-zinc-600" />
                     <div className="w-2.5 h-2.5 rounded-full bg-zinc-600" />
                     <div className="w-2.5 h-2.5 rounded-full bg-zinc-600" />
-                    <span className="ml-2 text-xs text-zinc-500 font-mono">{mod.preview.title}</span>
+                    <span className="ml-2 text-xs text-zinc-400 font-mono truncate">{mod.preview.title}</span>
                   </div>
                   <div className="flex-1 p-5 flex flex-col gap-3">
                     {/* Table header */}
                     <div className="grid grid-cols-4 gap-2 px-2">
-                      {["Item", "Qty", "Weight", "Value"].map((h) => (
+                      {["Item / Line", "Spec", "Param", "Status"].map((h) => (
                         <div key={h} className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
                           {h}
                         </div>
@@ -285,8 +283,8 @@ export default function Modules() {
                     ))}
                     {/* Total */}
                     <div className="mt-auto pt-3 border-t border-zinc-800 flex justify-between items-center">
-                      <span className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">Total</span>
-                      <span className="text-sm font-bold text-white font-mono">{mod.preview.total}</span>
+                      <span className="text-xs text-zinc-500 uppercase tracking-wider font-semibold">Summary</span>
+                      <span className="text-xs font-bold text-white font-mono">{mod.preview.total}</span>
                     </div>
                   </div>
                 </div>

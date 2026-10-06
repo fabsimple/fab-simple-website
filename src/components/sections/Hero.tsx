@@ -1,13 +1,13 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import { ArrowRight, ChevronRight, Play, Shield, Zap, TrendingUp } from "lucide-react";
+import { ArrowRight, Play, Award, QrCode, CheckCircle2 } from "lucide-react";
 
 const stats = [
-  { value: "500+", label: "Fabricators" },
+  { value: "500+", label: "Structural Fabricators" },
   { value: "2.4M+", label: "Tons Tracked" },
-  { value: "37%", label: "Avg. Efficiency Gain" },
-  { value: "99.9%", label: "Uptime SLA" },
+  { value: "100%", label: "AISC 303 Traceability" },
+  { value: "3-Tap", label: "Shop Floor PWA Scans" },
 ];
 
 const fadeUp: Variants = {
@@ -43,7 +43,7 @@ export default function Hero() {
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-zinc-300 bg-white text-xs font-medium text-zinc-500 uppercase tracking-widest mb-8 shadow-sm"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-slate-500 animate-pulse" />
-            Built for Structural Steel Fabricators
+            Built for Structural &amp; Miscellaneous Steel Fabricators
           </motion.div>
 
           {/* Headline */}
@@ -54,7 +54,7 @@ export default function Hero() {
             variants={fadeUp}
             className="text-5xl sm:text-6xl lg:text-7xl font-bold text-zinc-900 leading-[1.08] tracking-tight text-balance"
           >
-            Run Your Fab Shop
+            Run Your Steel Fab Shop
             <br />
             <span className="text-zinc-400">Without the Chaos.</span>
           </motion.h1>
@@ -67,9 +67,9 @@ export default function Hero() {
             variants={fadeUp}
             className="mt-6 text-lg sm:text-xl text-zinc-500 max-w-2xl mx-auto leading-relaxed"
           >
-            FabSimple connects your estimating, purchasing, production, and shop floor
-            into one intelligent system — so your team spends less time chasing
-            information and more time fabricating steel.
+            From Tekla &amp; SDS/2 BOM intake to heat-number traceability, saw-cut nesting,
+            and AIA G702 billing. FabSimple connects your estimators, project managers,
+            and shop floor into one unified platform.
           </motion.p>
 
           {/* CTAs */}
@@ -85,16 +85,16 @@ export default function Hero() {
               id="hero-cta-demo"
               className="inline-flex items-center gap-2 px-6 py-3.5 bg-zinc-900 text-white text-sm font-semibold rounded-md hover:bg-zinc-700 transition-all duration-200 shadow-sm group"
             >
-              Book a Free Demo
+              Book a Shop Walkthrough
               <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
             </a>
             <a
-              href="#features"
+              href="#modules"
               id="hero-cta-features"
               className="inline-flex items-center gap-2 px-6 py-3.5 bg-white text-zinc-700 text-sm font-semibold rounded-md border border-zinc-300 hover:bg-zinc-50 hover:border-zinc-400 transition-all duration-200"
             >
               <Play size={14} className="fill-zinc-500 text-zinc-500" />
-              See How It Works
+              Explore Platform Modules
             </a>
           </motion.div>
 
@@ -104,21 +104,21 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="mt-8 flex items-center justify-center gap-6 text-xs text-zinc-400"
+            className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-zinc-400"
           >
             <span className="flex items-center gap-1.5">
-              <Shield size={12} className="text-zinc-400" />
-              No credit card required
+              <Award size={13} className="text-slate-500" />
+              AISC 303 &amp; AWS D1.1 Ready
             </span>
-            <span className="w-px h-3 bg-zinc-300" />
+            <span className="w-px h-3 bg-zinc-300 hidden sm:inline" />
             <span className="flex items-center gap-1.5">
-              <Zap size={12} className="text-zinc-400" />
-              14-day free trial
+              <QrCode size={13} className="text-slate-500" />
+              Offline Mobile Shop Traveler
             </span>
-            <span className="w-px h-3 bg-zinc-300" />
+            <span className="w-px h-3 bg-zinc-300 hidden sm:inline" />
             <span className="flex items-center gap-1.5">
-              <TrendingUp size={12} className="text-zinc-400" />
-              SOC 2 compliant
+              <CheckCircle2 size={13} className="text-slate-500" />
+              Tekla &amp; SDS/2 CSV Intake
             </span>
           </motion.div>
         </div>
@@ -156,96 +156,123 @@ export default function Hero() {
               <div className="w-3 h-3 rounded-full bg-zinc-300" />
               <div className="w-3 h-3 rounded-full bg-zinc-300" />
               <div className="flex-1 mx-4">
-                <div className="w-48 mx-auto h-5 bg-zinc-200 rounded-full text-xs text-zinc-400 flex items-center justify-center">
-                  app.fabsimple.io/dashboard
+                <div className="w-72 mx-auto h-5 bg-zinc-200 rounded-full text-[11px] font-mono text-zinc-500 flex items-center justify-center">
+                  app.fabsimple.io/dashboard/PRJ-2026-0001
                 </div>
               </div>
             </div>
 
-            {/* Fake dashboard UI */}
+            {/* Dashboard UI */}
             <div className="bg-zinc-50 p-6">
-              <div className="grid grid-cols-12 gap-4 min-h-[340px]">
+              <div className="grid grid-cols-12 gap-4 min-h-[360px]">
                 {/* Sidebar */}
-                <div className="col-span-2 bg-zinc-900 rounded-lg p-3 space-y-2">
-                  {["Dashboard", "Jobs", "Estimating", "Purchasing", "Production", "Inventory", "Reports"].map(
-                    (item, i) => (
-                      <div
-                        key={item}
-                        className={`px-2 py-1.5 rounded text-xs font-medium ${
-                          i === 0 ? "bg-zinc-700 text-white" : "text-zinc-500 hover:text-zinc-300"
-                        }`}
-                      >
-                        {item}
-                      </div>
-                    )
-                  )}
+                <div className="col-span-12 md:col-span-3 lg:col-span-2 bg-zinc-900 rounded-lg p-3 space-y-1.5 text-left">
+                  <div className="text-[10px] font-semibold text-zinc-400 uppercase tracking-widest px-2 py-1">
+                    Novus Steel Demo
+                  </div>
+                  {[
+                    { name: "Live Activity", active: false },
+                    { name: "Projects", active: false },
+                    { name: "Tekla BOM Intake", active: false },
+                    { name: "Cut List & Nesting", active: false },
+                    { name: "Shop Traveler", active: true },
+                    { name: "QC & Weld Log", active: false },
+                    { name: "Heat Traceability", active: false },
+                    { name: "AIA G702 Billing", active: false },
+                  ].map((item) => (
+                    <div
+                      key={item.name}
+                      className={`px-2.5 py-1.5 rounded text-xs font-medium transition-colors ${
+                        item.active
+                          ? "bg-zinc-800 text-white font-semibold"
+                          : "text-zinc-400 hover:text-zinc-200"
+                      }`}
+                    >
+                      {item.name}
+                    </div>
+                  ))}
                 </div>
 
                 {/* Main content */}
-                <div className="col-span-10 space-y-4">
+                <div className="col-span-12 md:col-span-9 lg:col-span-10 space-y-4 text-left">
                   {/* Top KPIs */}
-                  <div className="grid grid-cols-4 gap-3">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                     {[
-                      { label: "Active Jobs", value: "47", change: "+3" },
-                      { label: "WIP Value", value: "$2.4M", change: "+12%" },
-                      { label: "On-Time Rate", value: "94.2%", change: "+2.1%" },
-                      { label: "Open POs", value: "128", change: "-8" },
+                      { label: "Active Project", value: "320 Tons", sub: "Dallas Skyline Tower", highlight: "PRJ-2026-0001" },
+                      { label: "Piece Marks In Shop", value: "214 Pcs", sub: "148 Passed QC", highlight: "69% Complete" },
+                      { label: "MTR Heat Coverage", value: "100%", sub: "A992 / A500-C / A36", highlight: "Zero Missing Heats" },
+                      { label: "AIA G702 Draw #3", value: "$612,000", sub: "Contract Value $1.2M", highlight: "Approved by GC" },
                     ].map((kpi) => (
-                      <div key={kpi.label} className="bg-white rounded-lg p-3 border border-zinc-200">
-                        <div className="text-xs text-zinc-400 font-medium">{kpi.label}</div>
-                        <div className="text-lg font-bold text-zinc-900 mt-0.5 font-mono">{kpi.value}</div>
-                        <div className="text-xs text-slate-500 mt-0.5">{kpi.change} this week</div>
+                      <div key={kpi.label} className="bg-white rounded-lg p-3.5 border border-zinc-200">
+                        <div className="text-[11px] text-zinc-400 font-medium">{kpi.label}</div>
+                        <div className="text-xl font-bold text-zinc-900 mt-1 font-mono">{kpi.value}</div>
+                        <div className="text-[11px] text-zinc-500 mt-1 flex justify-between">
+                          <span>{kpi.sub}</span>
+                          <span className="text-slate-600 font-mono font-medium">{kpi.highlight}</span>
+                        </div>
                       </div>
                     ))}
                   </div>
 
-                  {/* Chart placeholder */}
+                  {/* Production Station Pipeline */}
                   <div className="bg-white rounded-lg border border-zinc-200 p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="text-xs font-semibold text-zinc-700">Production Output — Last 12 Weeks</div>
-                      <div className="flex gap-2">
-                        {["Week", "Month", "Quarter"].map((t) => (
-                          <span
-                            key={t}
-                            className={`text-xs px-2 py-0.5 rounded ${
-                              t === "Week"
-                                ? "bg-zinc-900 text-white"
-                                : "text-zinc-400"
-                            }`}
-                          >
-                            {t}
-                          </span>
-                        ))}
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                      <div>
+                        <div className="text-xs font-semibold text-zinc-800">Shop Floor Station Flow — Phase 2 Release</div>
+                        <div className="text-[11px] text-zinc-400">Tekla Model Rev D · 48 assemblies releasing to fit-up</div>
+                      </div>
+                      <div className="flex gap-1.5 text-xs font-mono">
+                        <span className="px-2 py-0.5 rounded bg-zinc-900 text-white text-[11px]">Dallas Tower</span>
+                        <span className="px-2 py-0.5 rounded bg-zinc-100 text-zinc-600 text-[11px]">320.5 Tons</span>
                       </div>
                     </div>
-                    {/* Bar chart */}
-                    <div className="flex items-end gap-1.5 h-24">
-                      {[40, 65, 55, 80, 72, 90, 68, 85, 78, 92, 88, 95].map((h, i) => (
-                        <div key={i} className="flex-1 flex flex-col justify-end">
-                          <div
-                            className={`rounded-t ${i === 11 ? "bg-slate-600" : "bg-zinc-200"}`}
-                            style={{ height: `${h}%` }}
-                          />
+
+                    {/* Work Center Station Progress */}
+                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-2">
+                      {[
+                        { station: "Beam Line / CNC", count: "90 / 214 pcs", pct: 100, status: "Complete" },
+                        { station: "Fit-Up & Tack", count: "68 / 214 pcs", pct: 75, status: "In Progress" },
+                        { station: "AWS D1.1 Weld", count: "52 / 214 pcs", pct: 58, status: "Active" },
+                        { station: "SSPC Blast/Paint", count: "48 / 214 pcs", pct: 53, status: "4.2 mils DFT" },
+                        { station: "Staging / Ship", count: "20 / 214 pcs", pct: 22, status: "Load #4" },
+                      ].map((st) => (
+                        <div key={st.station} className="bg-zinc-50 rounded-md p-2.5 border border-zinc-100">
+                          <div className="text-[11px] font-semibold text-zinc-700 truncate">{st.station}</div>
+                          <div className="text-xs font-mono font-bold text-zinc-900 mt-1">{st.count}</div>
+                          <div className="w-full bg-zinc-200 rounded-full h-1.5 mt-2">
+                            <div className="bg-zinc-800 h-1.5 rounded-full" style={{ width: `${st.pct}%` }} />
+                          </div>
+                          <div className="text-[10px] text-zinc-400 mt-1.5 font-mono">{st.status}</div>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  {/* Job list */}
+                  {/* Piece Marks Live Traveler Table */}
                   <div className="bg-white rounded-lg border border-zinc-200 p-4">
-                    <div className="text-xs font-semibold text-zinc-700 mb-2">Recent Jobs</div>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="text-xs font-semibold text-zinc-800">Live Piece Mark Travelers (QR Verified)</div>
+                      <span className="text-[11px] text-slate-600 font-mono">3-Tap Mobile Sync Active</span>
+                    </div>
                     <div className="space-y-2">
                       {[
-                        { id: "JB-4821", name: "Riverside Bridge — Phase 2", status: "In Production", pct: 68 },
-                        { id: "JB-4820", name: "Westfield Tower — Structural", status: "Estimating", pct: 20 },
-                        { id: "JB-4819", name: "Harbor Terminal Expansion", status: "Purchasing", pct: 45 },
-                      ].map((job) => (
-                        <div key={job.id} className="flex items-center gap-4">
-                          <div className="text-xs font-mono text-zinc-400 w-14">{job.id}</div>
-                          <div className="flex-1 text-xs text-zinc-700 truncate">{job.name}</div>
-                          <div className="text-xs text-zinc-400 w-20 text-right">{job.status}</div>
-                          <div className="w-16 bg-zinc-100 rounded-full h-1.5">
-                            <div className="bg-zinc-600 h-1.5 rounded-full" style={{ width: `${job.pct}%` }} />
+                        { mark: "W14x82-1044", asm: "A-204 Column", grade: "A992", heat: "HT-23845", length: "24'-6\"", station: "AWS D1.1 Weld", status: "CWI Pass" },
+                        { mark: "HSS6x6-0312", asm: "B-108 Brace", grade: "A500-C", heat: "HT-23846", length: "18'-0\"", station: "SSPC Paint", status: "4.1 mils DFT" },
+                        { mark: "PL 1\"x12\"-BP", asm: "BP-12 Base Plt", grade: "A36", heat: "HT-24109", length: "2'-4\"", station: "CNC Plate Table", status: "Cut Ready" },
+                      ].map((item) => (
+                        <div key={item.mark} className="flex flex-wrap items-center justify-between gap-2 p-2 rounded bg-zinc-50 border border-zinc-100 text-xs">
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono font-bold text-zinc-900">{item.mark}</span>
+                            <span className="text-zinc-400">({item.asm})</span>
+                          </div>
+                          <div className="flex items-center gap-3 font-mono text-[11px] text-zinc-600">
+                            <span>{item.grade}</span>
+                            <span className="text-zinc-400">Heat: {item.heat}</span>
+                            <span>{item.length}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="px-2 py-0.5 rounded bg-zinc-200 text-zinc-700 text-[10px] font-medium">{item.station}</span>
+                            <span className="px-2 py-0.5 rounded bg-zinc-900 text-white text-[10px] font-mono">{item.status}</span>
                           </div>
                         </div>
                       ))}

@@ -15,23 +15,26 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FabSimple — Steel Fabrication Management Software",
+  title: "FabSimple — Structural Steel Fabrication Management Software",
   description:
-    "FabSimple is the all-in-one management platform built for structural steel fabricators. Streamline estimating, job costing, production control, and shop floor operations.",
+    "FabSimple is the operations platform built for structural and miscellaneous steel fabricators. Tekla & SDS/2 BOM intake, AISC 303 heat traceability, offline mobile traveler PWA, 1D cut nesting, and AIA G702 billing.",
   keywords: [
-    "steel fabrication software",
-    "structural steel ERP",
-    "fabrication management",
-    "job costing",
-    "production control",
-    "shop floor management",
-    "steel estimating software",
+    "structural steel fabrication software",
+    "steel fabrication ERP",
+    "Tekla Structures BOM import",
+    "SDS/2 drawing management",
+    "AISC 303 quality checklist",
+    "AWS D1.1 weld log",
+    "MTR heat number traceability",
+    "AIA G702 G703 progress billing",
+    "1D linear cut nesting",
+    "steel shop floor traveler",
   ],
-  authors: [{ name: "FabSimple" }],
+  authors: [{ name: "FabSimple Technologies" }],
   openGraph: {
-    title: "FabSimple — Steel Fabrication Management Software",
+    title: "FabSimple — Structural Steel Fabrication Management Software",
     description:
-      "The all-in-one platform for structural steel fabricators. From estimating to delivery.",
+      "From Tekla model BOM intake to field erection and AIA G702 draws. The unified operations platform for steel fabricators.",
     type: "website",
   },
 };

@@ -7,33 +7,33 @@ import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 const testimonials = [
   {
     quote:
-      "We were running our entire shop on spreadsheets and a combination of three different programs. FabSimple brought everything into one place. Estimating that used to take two weeks now takes two days.",
+      "When detailers issued Rev D while Rev B was already on the saw, we used to lose tens of thousands in scrapped wide-flange beams. FabSimple's automated Tekla CSV diffing halts bad cuts instantly, supersedes drawings, and keeps our shop floor working only to current revisions.",
     author: "Marcus Webb",
     role: "VP of Operations",
     company: "Meridian Steel Fabricators",
-    size: "120-person shop, Pacific Northwest",
-    metric: "14 days → 2 days",
-    metricLabel: "Estimating cycle time",
+    size: "120-person shop · 1,400 tons/mo · Pacific Northwest",
+    metric: "$180k+",
+    metricLabel: "Scrap steel avoided annually",
   },
   {
     quote:
-      "The material traceability alone justified the investment. We were failing quality audits because we couldn't trace heat numbers back through the job. That hasn't happened once since we went live on FabSimple.",
-    author: "Sandra Okoye",
-    role: "Quality Manager",
+      "Preparing our AISC 303 audit binder used to mean two frantic weeks of searching file cabinets for Mill Test Reports and matching unreadable heat stamps on drops. With FabSimple, every piece mark is locked to its MTR from receiving. Our auditor reviewed the full electronic binder in under five minutes.",
+    author: "Linda Chen",
+    role: "Quality Director & CWI",
     company: "Iron Ridge Structural",
-    size: "65-person shop, Texas",
-    metric: "0",
-    metricLabel: "Failed QA audits in 18 months",
+    size: "85-person shop · AISC Certified · Texas",
+    metric: "2 wks → 5 min",
+    metricLabel: "AISC audit binder assembly",
   },
   {
     quote:
-      "My project managers finally stopped asking the shop foreman for status updates. They just open the dashboard. The time we've saved on internal status meetings alone is worth it.",
+      "Our PMs, shop foremen, and accounting team finally work off the exact same numbers. Outbound trailer loads are staged to legal axle limits by crane pick sequence, and our AIA G702 / G703 payment applications go out on the 25th with zero pushback from GCs.",
     author: "Derek Callahan",
-    role: "President",
+    role: "President & Owner",
     company: "Callahan Steel & Erection",
-    size: "200+ person shop, Midwest",
-    metric: "8 hrs/week",
-    metricLabel: "Saved in status reporting per PM",
+    size: "200+ person shop & field erector · Midwest",
+    metric: "18 Days",
+    metricLabel: "Faster monthly GC billing cycle",
   },
 ];
 
@@ -57,8 +57,11 @@ export default function Testimonials() {
           <div className="badge mb-4 mx-auto">Customer Stories</div>
           <h2 className="text-4xl sm:text-5xl font-bold text-zinc-900 leading-tight tracking-tight">
             Fabricators who made the switch
-            <span className="text-zinc-400"> don&apos;t go back.</span>
+            <span className="text-zinc-400"> don&apos;t look back.</span>
           </h2>
+          <p className="mt-4 text-zinc-500 text-lg leading-relaxed">
+            See how owners, quality directors, and operations managers transformed their steel fabrication shops with FabSimple.
+          </p>
         </motion.div>
 
         {/* Testimonial card */}

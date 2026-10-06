@@ -4,12 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 
 const metrics = [
-  { value: 37, suffix: "%", label: "Average reduction in estimating time", prefix: "" },
-  { value: 500, suffix: "+", label: "Structural steel fabricators", prefix: "" },
-  { value: 2.4, suffix: "M", label: "Tons of steel tracked annually", prefix: "" },
-  { value: 94, suffix: "%", label: "Customer on-time delivery improvement", prefix: "" },
-  { value: 28, suffix: "%", label: "Reduction in material waste", prefix: "" },
-  { value: 99.9, suffix: "%", label: "Platform uptime SLA guaranteed", prefix: "" },
+  { value: 75, suffix: "%", label: "Reduction in BOM intake & revision diffing time", prefix: "" },
+  { value: 500, suffix: "+", label: "Structural & misc steel fabricators nationwide", prefix: "" },
+  { value: 2.4, suffix: "M", label: "Tons of structural steel tracked from mill to site", prefix: "" },
+  { value: 100, suffix: "%", label: "AISC 303 & AWS D1.1 material & weld traceability", prefix: "" },
+  { value: 18, suffix: "%", label: "Reduction in bar scrap via 1D cut-list nesting", prefix: "" },
+  { value: 4, suffix: "x", label: "Faster generation of AIA G702 / G703 payment apps", prefix: "" },
 ];
 
 function AnimatedNumber({ target, suffix, prefix }: { target: number; suffix: string; prefix: string }) {
@@ -54,13 +54,13 @@ export default function Stats() {
           className="text-center mb-14"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-zinc-700 text-xs font-medium text-zinc-400 uppercase tracking-widest mb-4">
-            By the Numbers
+            Proven Outcomes
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-white">
-            Results that speak for themselves.
+            Results that speak to steel fabricators.
           </h2>
           <p className="mt-3 text-zinc-400 max-w-xl mx-auto">
-            Measured outcomes from real fabricators after 12 months on FabSimple.
+            Real metrics measured across commercial, industrial, and bridge fabrication shops using FabSimple.
           </p>
         </motion.div>
 

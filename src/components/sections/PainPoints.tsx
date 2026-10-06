@@ -1,36 +1,40 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import { FileSpreadsheet, AlertTriangle, Clock, TrendingDown, ArrowRight } from "lucide-react";
+import { GitCompare, ShieldAlert, Smartphone, DollarSign, ArrowRight } from "lucide-react";
 
 const pains = [
   {
-    icon: FileSpreadsheet,
-    problem: "Spreadsheets & Siloed Data",
+    icon: GitCompare,
+    problem: "Detailer Revision Whiplash",
     description:
-      "Your estimator works in Excel, the shop floor uses paper travelers, and the PM can't see live job status. Nobody has the same numbers.",
-    solution: "One connected system — estimates, POs, production sequences, and billing all in sync.",
+      "When the engineer issues Rev D while Rev B is already on the beam line, manual drawing comparisons fail. Fabricating to superseded drawings causes tons of scrap steel and painful back charges.",
+    solution:
+      "Automated Tekla & SDS/2 CSV intake with instant revision diffing. Automatically supersedes older drawings, locks changed piece marks, and halts bad cuts before they happen.",
   },
   {
-    icon: AlertTriangle,
-    problem: "Material Traceability Gaps",
+    icon: ShieldAlert,
+    problem: "Lost Heats & AISC Audit Panic",
     description:
-      "Lost heat numbers, unknown remnant inventory, and last-minute material shortages delay jobs and put quality certifications at risk.",
-    solution: "Full material lineage from purchase order to finished part — heat numbers, grades, and drop tracking built in.",
+      "Loose Mill Test Reports (MTRs), unrecorded heat numbers on drops, and frantic binder preparation before an AISC or AWS audit put your shop certification and project retainage at risk.",
+    solution:
+      "Full material genealogy from PO receiving to erection. Heat splits, ASTM grades (A992, A500, A36), and MTR PDFs hard-locked to piece marks — exportable audit binders in under 60 seconds.",
   },
   {
-    icon: Clock,
-    problem: "Missed Deadlines & Cost Overruns",
+    icon: Smartphone,
+    problem: "Paper Travelers & Shop Floor Blindspots",
     description:
-      "Without real-time shop floor data, you discover a job is behind schedule only after a deadline is already missed.",
-    solution: "Live WIP tracking and automated scheduling alerts keep every stakeholder ahead of the problem.",
+      "Foremen spend half their shift walking the bay looking for piece marks, while PMs constantly call to ask if assembly A-204 is welded or through the paint booth.",
+    solution:
+      "Offline-first mobile PWA for shop workers. 3-tap QR barcode updates at Beam Line/CNC, Fit-up, AWS D1.1 Welding, and Paint Inspection — live WIP visible across the company.",
   },
   {
-    icon: TrendingDown,
-    problem: "Margin Erosion on Every Job",
+    icon: DollarSign,
+    problem: "Margin Slippage & Delayed AIA G702 Draws",
     description:
-      "Generic ERPs don't understand fabrication routing, so your true labor and material costs stay hidden until the job is over.",
-    solution: "Per-operation job costing with estimated vs. actual variance reporting — catch margin bleed before it hurts.",
+      "Manual weight takeoffs delay monthly GC payment applications. Uncaptured change orders and unmonitored shop labor hours erode your margins before anyone notices.",
+    solution:
+      "Continuous job costing by work center. Compare estimated vs. actual man-hours and generate AIA G702 / G703 schedule of values draw requests backed by real shop progress.",
   },
 ];
 
@@ -58,12 +62,12 @@ export default function PainPoints() {
         >
           <div className="badge mb-4">Why FabSimple</div>
           <h2 className="text-4xl sm:text-5xl font-bold text-zinc-900 leading-tight tracking-tight">
-            Generic ERP wasn't built
-            <span className="text-zinc-400"> for the shop floor.</span>
+            Generic ERP wasn&apos;t built
+            <span className="text-zinc-400"> for the steel shop floor.</span>
           </h2>
           <p className="mt-4 text-zinc-500 text-lg leading-relaxed">
-            FabSimple is engineered from the ground up for structural steel fabricators — not
-            adapted from a generic manufacturing template.
+            Standard manufacturing software doesn&apos;t understand piece marks, heat numbers, or Tekla revisions.
+            FabSimple is engineered specifically for structural and miscellaneous steel fabrication.
           </p>
         </motion.div>
 

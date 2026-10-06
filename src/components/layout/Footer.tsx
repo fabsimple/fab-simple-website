@@ -1,10 +1,35 @@
 import Link from "next/link";
 
 const footerLinks = {
-  Product: ["Features", "Modules", "Integrations", "Pricing", "Release Notes", "Security"],
-  Solutions: ["Structural Steel", "Miscellaneous Steel", "Metal Buildings", "Erectors", "Large Shops"],
-  Resources: ["Documentation", "Help Center", "Implementation Guide", "API Reference", "Community"],
-  Company: ["About Us", "Careers", "Blog", "Press", "Contact", "Partners"],
+  Product: [
+    "Tekla & SDS/2 Intake",
+    "Material Traceability & Heats",
+    "Shop Traveler Worker PWA",
+    "AWS & AISC Quality Queue",
+    "1D Cut List & Nesting",
+    "AIA G702 / G703 Billing",
+  ],
+  Solutions: [
+    "Commercial Structural Steel",
+    "Industrial Framing & Heavy Plate",
+    "Bridge & Infrastructure",
+    "Miscellaneous & Ornamental Metals",
+    "Steel Erectors & Field Crews",
+  ],
+  Resources: [
+    "AISC 303 Audit Guide",
+    "Tekla CSV Import Format",
+    "MTR Management Best Practices",
+    "Offline Bay PWA Setup",
+    "REST API Documentation",
+  ],
+  Company: [
+    "About FabSimple",
+    "Customer Stories",
+    "Security & Architecture",
+    "Contact Engineering",
+    "Partner Network",
+  ],
 };
 
 export default function Footer() {
@@ -29,7 +54,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">
-              The all-in-one management platform built from the ground up for structural steel fabricators.
+              The operating system for structural and miscellaneous steel fabrication shops. Built for owners, project managers, CWIs, and shop floor crews.
             </p>
             <div className="mt-6 flex gap-3">
               {["LinkedIn", "Twitter", "YouTube"].map((social) => (
@@ -37,6 +62,7 @@ export default function Footer() {
                   key={social}
                   href="#"
                   className="w-8 h-8 rounded-md bg-zinc-900 border border-zinc-800 flex items-center justify-center text-xs text-zinc-500 hover:text-zinc-300 hover:border-zinc-700 transition-colors"
+                  aria-label={`Follow FabSimple on ${social}`}
                 >
                   {social.charAt(0)}
                 </a>
@@ -54,7 +80,7 @@ export default function Footer() {
                 {links.map((link) => (
                   <li key={link}>
                     <a
-                      href="#"
+                      href="#demo"
                       className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors"
                     >
                       {link}
@@ -72,7 +98,7 @@ export default function Footer() {
             © {new Date().getFullYear()} FabSimple Technologies, Inc. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            {["Privacy Policy", "Terms of Service", "Cookie Policy"].map((link) => (
+            {["Privacy Policy", "Terms of Service", "AISC Compliance Standards"].map((link) => (
               <a key={link} href="#" className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors">
                 {link}
               </a>

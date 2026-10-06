@@ -1,40 +1,40 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FileText, Zap, Settings, Truck } from "lucide-react";
+import { UploadCloud, Scissors, QrCode, FileSpreadsheet } from "lucide-react";
 
 const steps = [
   {
     number: "01",
-    icon: FileText,
-    title: "Import & Estimate",
+    icon: UploadCloud,
+    title: "Tekla & SDS/2 Intake",
     description:
-      "Connect your CAD model or import a bill of materials. FabSimple builds a detailed estimate with real material costs and labor rates — ready to send in minutes.",
-    detail: "Supports Tekla Structures, SDS/2, and Excel BOM imports",
+      "Upload your detailer CSV model export and drawing packages. FabSimple parses piece marks, validates mill lengths, checks weight variances, and auto-supersedes old revisions.",
+    detail: "Native Tekla Structures, SDS/2 & KISS BOM support",
   },
   {
     number: "02",
-    icon: Settings,
-    title: "Plan & Purchase",
+    icon: Scissors,
+    title: "Nesting & Heat Sourcing",
     description:
-      "Win the job, convert to a live project. Auto-generate material requisitions, compare vendor quotes, and issue POs with one approval workflow.",
-    detail: "Typical PO cycle reduced from 3 days to same-day",
+      "Run 1D linear cut nesting to maximize yield from mill stock and remnant drops. Generate POs and log discrete inbound deliveries with multi-heat splits and attached MTRs.",
+    detail: "Cuts scrap by up to 18% with drop recovery",
   },
   {
     number: "03",
-    icon: Zap,
-    title: "Fabricate & Track",
+    icon: QrCode,
+    title: "Shop Floor & Quality Gates",
     description:
-      "Sequence the shop floor, assign work to crews, and watch real-time progress update as workers scan piece marks on the floor. No paperwork.",
-    detail: "Live WIP visible to everyone — PM, foreman, and client",
+      "Workers scan piece mark QR codes on tablets at Beam Line, Fit-up, AWS D1.1 Welding, and Paint Booth. CWI inspectors sign off hold points and auto-generate NCRs if defects occur.",
+    detail: "Works 100% offline in steel bays with instant sync",
   },
   {
     number: "04",
-    icon: Truck,
-    title: "Ship & Invoice",
+    icon: FileSpreadsheet,
+    title: "Staging, Erection & AIA Billing",
     description:
-      "Generate shipping lists, packing slips, and Mill Cert packages automatically. Close out the job and export final cost reports for accounting.",
-    detail: "Integrates with QuickBooks, Sage 100, and COINS",
+      "Sequence loads by crane pick priorities, print trailer manifests, and generate AIA G702 / G703 progress payment applications tied directly to validated erected tonnage.",
+    detail: "1-click export of complete AISC MTR audit packets",
   },
 ];
 
@@ -52,11 +52,11 @@ export default function HowItWorks() {
         >
           <div className="badge mb-4 mx-auto">How It Works</div>
           <h2 className="text-4xl sm:text-5xl font-bold text-zinc-900 leading-tight tracking-tight">
-            From quote to delivery,
-            <span className="text-zinc-400"> one platform.</span>
+            From detailer model to jobsite erection,
+            <span className="text-zinc-400"> one connected flow.</span>
           </h2>
           <p className="mt-4 text-zinc-500 text-lg leading-relaxed">
-            FabSimple follows your natural workflow — it doesn&apos;t force you to change how you work, it makes what you already do dramatically faster.
+            FabSimple mirrors the actual workflow of a structural steel shop — eliminating spreadsheets, paperwork, and disconnected communication.
           </p>
         </motion.div>
 
@@ -108,15 +108,15 @@ export default function HowItWorks() {
           transition={{ duration: 0.55 }}
           className="mt-16 bg-zinc-50 border border-zinc-200 rounded-xl px-8 py-10 text-center"
         >
-          <h3 className="text-2xl font-bold text-zinc-900">Ready to see it in action?</h3>
+          <h3 className="text-2xl font-bold text-zinc-900">Ready to see it run with your shop&apos;s data?</h3>
           <p className="mt-2 text-zinc-500">
-            Join 500+ fabricators who have modernized their operations with FabSimple.
+            Send us a sample Tekla BOM or drawing package and we&apos;ll show you your exact parts live on FabSimple.
           </p>
           <a
             href="#demo"
             className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-zinc-900 text-white text-sm font-semibold rounded-md hover:bg-zinc-700 transition-colors"
           >
-            Schedule a Live Walkthrough
+            Schedule a Custom Shop Walkthrough
           </a>
         </motion.div>
       </div>

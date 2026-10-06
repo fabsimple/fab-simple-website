@@ -6,75 +6,82 @@ import { Check, ChevronDown, ChevronUp } from "lucide-react";
 
 const plans = [
   {
-    name: "Starter",
+    name: "Fabricator Starter",
     price: "990",
     period: "/month",
-    description: "For smaller shops getting off spreadsheets.",
-    seats: "Up to 15 users",
+    description: "For regional shops modernizing off spreadsheets and paper travelers.",
+    seats: "Up to 15 users · 5 active projects",
     highlight: false,
     features: [
-      "Estimating module",
-      "Job costing",
-      "Basic purchasing",
-      "5 concurrent active jobs",
-      "Email support",
-      "QuickBooks integration",
+      "Tekla Structures & SDS/2 CSV BOM intake",
+      "Piece mark & drawing register with revision control",
+      "Linear saw cut list & 1D nesting exports",
+      "Daily station logs by work center & shift",
+      "Purchase order receiving & inventory tracking",
+      "QuickBooks Online accounting sync",
+      "Email & phone support during shop hours",
     ],
   },
   {
-    name: "Professional",
+    name: "Fabricator Professional",
     price: "2,490",
     period: "/month",
-    description: "The full platform for growing fabricators.",
-    seats: "Up to 50 users",
+    description: "The complete operations system for commercial & industrial steel shops.",
+    seats: "Up to 50 users · Unlimited active projects",
     highlight: true,
     features: [
       "Everything in Starter",
-      "Production control & scheduling",
-      "Full inventory & MTR tracking",
-      "Shop floor mobile app",
-      "Unlimited active jobs",
-      "Priority support + onboarding",
-      "All integrations included",
-      "API access",
+      "Offline Mobile Shop Traveler PWA (QR scanning)",
+      "Hard-locked Heat Number & Mill Test Report (MTR) vault",
+      "AISC 303 & AWS D1.1 QC Queue with auto-NCR creation",
+      "SSPC Paint dry film thickness (DFT mils) inspection logs",
+      "AIA G702 / G703 progress billing & retainage",
+      "Trailer load staging & crane pick sequencing",
+      "Real-time Job Cost tracker with man-hour variance",
+      "AI Copilot grounded in shop KPIs & open NCRs",
+      "Priority onboarding & live shop floor training",
     ],
   },
   {
-    name: "Enterprise",
+    name: "Enterprise Fabrication",
     price: "Custom",
     period: "",
-    description: "Multi-location shops & custom requirements.",
-    seats: "Unlimited users",
+    description: "Multi-plant operations, heavy structural, and high-tonnage fabricators.",
+    seats: "Unlimited users · Multi-facility",
     highlight: false,
     features: [
       "Everything in Professional",
-      "Multi-location & multi-entity",
-      "Custom workflows",
-      "Dedicated account manager",
-      "SLA guarantees",
-      "On-premise option available",
-      "Custom integrations",
-      "SSO / SAML",
+      "Multi-plant operations & inter-yard material transfers",
+      "Custom ERP integration (Sage 100/300, Viewpoint, COINS)",
+      "Dedicated AISC & CWI compliance onboarding manager",
+      "Enterprise SLA guarantees & 24/7 emergency support",
+      "SSO / SAML & custom RBAC role configurations",
+      "Direct CNC saw & plate burning machine API feeds",
+      "Annual on-site process optimization review",
     ],
   },
 ];
 
 const faqItems = [
   {
-    q: "How long does onboarding take?",
-    a: "Most shops are fully live within 4–8 weeks. Our implementation team handles data migration, training, and go-live support. You'll have a dedicated implementation manager from day one.",
+    q: "How does FabSimple handle Tekla Structures and SDS/2 drawing revisions?",
+    a: "FabSimple imports standard CSV exports from Tekla Structures, SDS/2, and KISS formats. When detailers issue a new revision (e.g. Rev C to Rev D), FabSimple automatically diffs added, removed, and modified piece marks. It supersedes older drawings, flags geometry or mill-length differences, and halts work on changed items before bad cuts reach the beam line.",
   },
   {
-    q: "Can I import my existing job data?",
-    a: "Yes. We support imports from Excel, CSV, and most common estimating tools. For structured data migrations from other ERP systems, our team handles the migration as part of onboarding.",
+    q: "Does the Shop Floor Traveler PWA work without Wi-Fi in steel fabrication bays?",
+    a: "Yes. Steel bays are notorious Faraday cages for Wi-Fi and cellular reception. The FabSimple Worker PWA is built offline-first. Workers can scan piece mark QR codes, verify drawings, clock operations, and photograph defects with zero network connection. Everything syncs automatically the moment the device reconnects.",
   },
   {
-    q: "Does FabSimple work offline on the shop floor?",
-    a: "The shop floor mobile app (iOS and Android) supports offline mode with automatic sync when connectivity is restored — essential for shops with spotty wifi in the fabrication bay.",
+    q: "How does FabSimple ensure AISC 303 and AWS D1.1 audit compliance?",
+    a: "Material traceability is enforced at receiving: every inbound delivery logs discrete heat splits and attached MTR PDFs before material can be issued to piece marks. On the floor, AWS D1.1 weld inspections record welder stencils, and paint bays log SSPC DFT mils. When an auditor arrives, you can export a complete, verifiable project quality binder in under 60 seconds.",
   },
   {
-    q: "Is my data secure?",
-    a: "FabSimple is SOC 2 Type II certified. All data is encrypted at rest and in transit. We offer 99.9% uptime SLA and daily backups. Enterprise customers can opt for private cloud or on-premise deployment.",
+    q: "Can FabSimple generate official AIA G702 and G703 billing applications?",
+    a: "Yes. FabSimple connects your contract Schedule of Values directly to completed shop fabrication and erected tonnage. It automatically calculates retainage, approved change orders, and stored materials, generating print-ready AIA G702 and G703 payment applications backed by real shop output.",
+  },
+  {
+    q: "How long does implementation take for a typical fabrication shop?",
+    a: "Most fabricators are live within 3 to 6 weeks. Our team configures your work centers, imports your active Tekla BOMs, sets up user roles (Owner, PM, Estimator, Foreman, QC, Worker, Accounting), and provides dedicated training for both office staff and shop floor crews.",
   },
 ];
 
@@ -94,10 +101,10 @@ export default function PricingFaq() {
         >
           <div className="badge mb-4 mx-auto">Pricing</div>
           <h2 className="text-4xl sm:text-5xl font-bold text-zinc-900 leading-tight tracking-tight">
-            Simple, transparent pricing.
+            Transparent pricing for steel shops.
           </h2>
           <p className="mt-4 text-zinc-500 text-lg leading-relaxed">
-            No per-seat surprises. No module add-on fees. Choose the plan that fits your shop.
+            No per-ton hidden taxes. No expensive module add-on fees. Select the plan designed for your fabrication volume.
           </p>
         </motion.div>
 
@@ -118,7 +125,7 @@ export default function PricingFaq() {
             >
               {plan.highlight && (
                 <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-700 text-xs font-semibold text-zinc-300 mb-4 w-fit">
-                  Most Popular
+                  Most Popular for Fab Shops
                 </div>
               )}
               <div className={`text-sm font-semibold mb-2 ${plan.highlight ? "text-zinc-400" : "text-zinc-500"}`}>
@@ -148,7 +155,7 @@ export default function PricingFaq() {
                     : "bg-zinc-900 text-white hover:bg-zinc-700"
                 }`}
               >
-                {plan.price === "Custom" ? "Talk to Sales" : "Start Free Trial"}
+                {plan.price === "Custom" ? "Contact Enterprise Sales" : "Schedule a Live Demo"}
               </a>
 
               <ul className="space-y-3">
