@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
+import { scrollToElement } from "@/lib/utils";
 
 const plans = [
   {
@@ -149,6 +150,7 @@ export default function PricingFaq() {
 
               <a
                 href="#demo"
+                onClick={(e) => scrollToElement("demo", e)}
                 className={`block text-center py-3 rounded-md text-sm font-semibold transition-colors mb-8 ${
                   plan.highlight
                     ? "bg-white text-zinc-900 hover:bg-zinc-100"

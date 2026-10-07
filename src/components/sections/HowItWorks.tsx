@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { UploadCloud, Scissors, QrCode, FileSpreadsheet } from "lucide-react";
+import { scrollToElement } from "@/lib/utils";
 
 const steps = [
   {
@@ -114,6 +115,7 @@ export default function HowItWorks() {
           </p>
           <a
             href="#demo"
+            onClick={(e) => scrollToElement("demo", e)}
             className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-zinc-900 text-white text-sm font-semibold rounded-md hover:bg-zinc-700 transition-colors"
           >
             Schedule a Custom Shop Walkthrough
