@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 interface FooterLink {
   label: string;
@@ -54,6 +55,19 @@ const footerLinks: FooterCategory[] = [
   },
 ];
 
+const socialLinks = [
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/company/fabsimple/",
+    icon: "/images/social/linkedin.png",
+  },
+  {
+    name: "Instagram",
+    href: "https://www.instagram.com/fabsimpleus?stkn=ZnFzajAwdDBnMTF5&utm_source=qr",
+    icon: "/images/social/instagram.png",
+  },
+];
+
 export default function Footer() {
   return (
     <footer id="contact" className="bg-zinc-950 border-t border-zinc-900">
@@ -78,15 +92,23 @@ export default function Footer() {
             <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">
               The operating system for structural and miscellaneous steel fabrication shops. Built for owners, project managers, CWIs, and shop floor crews.
             </p>
-            <div className="mt-6 flex gap-3">
-              {["LinkedIn", "Twitter", "YouTube"].map((social) => (
+            <div className="mt-6 flex items-center gap-3">
+              {socialLinks.map((social) => (
                 <a
-                  key={social}
-                  href="#"
-                  className="w-8 h-8 rounded-md bg-zinc-900 border border-zinc-800 flex items-center justify-center text-xs text-zinc-500 hover:text-zinc-300 hover:border-zinc-700 transition-colors"
-                  aria-label={`Follow FabSimple on ${social}`}
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center p-1.5 hover:border-zinc-700 hover:bg-zinc-800/80 hover:scale-105 transition-all"
+                  aria-label={`Follow FabSimple on ${social.name}`}
                 >
-                  {social.charAt(0)}
+                  <Image
+                    src={social.icon}
+                    alt={social.name}
+                    width={24}
+                    height={24}
+                    className="w-full h-full object-contain"
+                  />
                 </a>
               ))}
             </div>

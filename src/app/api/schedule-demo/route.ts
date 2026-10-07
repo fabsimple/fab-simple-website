@@ -121,7 +121,7 @@ export async function POST(request: Request) {
     const message = error instanceof Error ? error.message : "Failed to process demo request";
     return NextResponse.json(
       {
-        error: "We were unable to process your request at this time. Please try again or reach out directly to sales@fabsimple.io.",
+        error: "We were unable to process your request at this time. Please try again or reach out directly to contact@fabsimpleus.com.",
         details: process.env.NODE_ENV === "development" ? message : undefined,
       },
       { status: 500 }

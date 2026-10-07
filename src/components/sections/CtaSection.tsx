@@ -114,11 +114,13 @@ export default function CtaSection() {
             <div className="mt-10 space-y-3">
               <div className="flex items-center gap-3 text-sm text-zinc-500">
                 <Mail size={16} className="text-zinc-600" />
-                <span>sales@fabsimple.io</span>
+                <a href="mailto:contact@fabsimpleus.com" className="hover:text-zinc-300 transition-colors">
+                  contact@fabsimpleus.com
+                </a>
               </div>
               <div className="flex items-center gap-3 text-sm text-zinc-500">
                 <Phone size={16} className="text-zinc-600" />
-                <span>+1 (800) 322-7475</span>
+                <span>+91 97429 75323</span>
               </div>
               <div className="flex items-center gap-3 text-sm text-zinc-500">
                 <MapPin size={16} className="text-zinc-600" />
