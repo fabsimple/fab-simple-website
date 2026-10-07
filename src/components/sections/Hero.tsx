@@ -1,14 +1,48 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { ArrowRight, Play, Award, QrCode, CheckCircle2 } from "lucide-react";
 import { scrollToElement } from "@/lib/utils";
 
+const heroSlides = [
+  {
+    titlePart1: "Run Your Fabrication Shop.",
+    titlePart2: "Without the Chaos.",
+    description:
+      "Bring estimating, project management, procurement, production, inventory, and billing together in one connected platform. From Tekla and SDS/2 BOM intake to heat-number traceability, saw-cut nesting, and AIA G702 billing, FabSimple keeps your entire operation organized and moving forward.",
+  },
+  {
+    titlePart1: "Simplify Every Step of",
+    titlePart2: "Your Fabrication Workflow.",
+    description:
+      "Eliminate disconnected spreadsheets, manual processes, and information gaps across your fabrication workflow. FabSimple streamlines everything from estimating and BOM processing to material tracking, shop-floor operations, project management, and billing—all in one place.",
+  },
+  {
+    titlePart1: "Run Your Fab Shop Smarter.",
+    titlePart2: "Not Harder.",
+    description:
+      "Equip your team with purpose-built tools for every stage of shop operations. From the GC Portal and Cut-List Optimizer to AISC 303 quality control, NCR reporting, and OSHA checklists, FabSimple helps your team improve efficiency, maintain compliance, and keep every job on track.",
+  },
+  {
+    titlePart1: "Turn Fabrication Complexity",
+    titlePart2: "into Operational Clarity.",
+    description:
+      "Steel fabrication involves countless details, materials, processes, and deadlines. FabSimple brings them together into a clear, connected workflow—giving you visibility from the initial estimate and BOM intake through material traceability, production, project delivery, and final billing.",
+  },
+  {
+    titlePart1: "One Platform.",
+    titlePart2: "Complete Control of Your Fab Shop.",
+    description:
+      "Replace disconnected tools with one platform built around the way fabrication shops actually work. FabSimple connects estimating, project management, material and heat tracking, nesting, production, inventory, and AIA billing so your teams can work from a single source of truth.",
+  },
+];
+
 const stats = [
-  { value: "500+", label: "Structural Fabricators" },
-  { value: "2.4M+", label: "Tons Tracked" },
   { value: "100%", label: "AISC 303 Traceability" },
-  { value: "3-Tap", label: "Shop Floor PWA Scans" },
+  { value: "AWS D1.1", label: "Structural Welding Code" },
+  { value: "AIA G702", label: "Progress Billing & SOV" },
+  { value: "Tekla & SDS/2", label: "Direct Detailing Intake" },
 ];
 
 const fadeUp: Variants = {
@@ -21,6 +55,17 @@ const fadeUp: Variants = {
 };
 
 export default function Hero() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [isPaused]);
+
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-zinc-50">
       {/* Grid pattern background */}
@@ -47,31 +92,50 @@ export default function Hero() {
             Built for Structural &amp; Miscellaneous Steel Fabricators
           </motion.div>
 
-          {/* Headline */}
-          <motion.h1
-            custom={1}
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            className="text-5xl sm:text-6xl lg:text-7xl font-bold text-zinc-900 leading-[1.08] tracking-tight text-balance"
+          {/* Rotating Headline & Description Carousel */}
+          <div
+            className="relative min-h-[310px] sm:min-h-[260px] lg:min-h-[250px] flex flex-col justify-center"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
           >
-            Run Your Steel Fab Shop
-            <br />
-            <span className="text-zinc-400">Without the Chaos.</span>
-          </motion.h1>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -14 }}
+                transition={{ duration: 0.45, ease: [0.21, 0.47, 0.32, 0.98] }}
+                className="flex flex-col items-center"
+              >
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-zinc-900 leading-[1.08] tracking-tight text-balance">
+                  {heroSlides[currentSlide].titlePart1}
+                  <br />
+                  <span className="text-zinc-400">{heroSlides[currentSlide].titlePart2}</span>
+                </h1>
 
-          {/* Sub-copy */}
-          <motion.p
-            custom={2}
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            className="mt-6 text-lg sm:text-xl text-zinc-500 max-w-2xl mx-auto leading-relaxed"
-          >
-            From Tekla &amp; SDS/2 BOM intake to heat-number traceability, saw-cut nesting,
-            and AIA G702 billing. FabSimple connects your estimators, project managers,
-            and shop floor into one unified platform.
-          </motion.p>
+                <p className="mt-6 text-base sm:text-lg lg:text-xl text-zinc-500 max-w-2xl mx-auto leading-relaxed">
+                  {heroSlides[currentSlide].description}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Slide Indicator Pills */}
+          <div className="flex items-center justify-center gap-2 mt-6 mb-2" aria-label="Hero carousel navigation">
+            {heroSlides.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setCurrentSlide(idx)}
+                className={`h-1.5 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-800 ${
+                  idx === currentSlide
+                    ? "w-8 bg-zinc-900"
+                    : "w-2 bg-zinc-300 hover:bg-zinc-400"
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
 
           {/* CTAs */}
           <motion.div
@@ -135,11 +199,11 @@ export default function Hero() {
         >
           <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-zinc-200 divide-y md:divide-y-0">
             {stats.map((stat, i) => (
-              <div key={i} className="px-8 py-6 text-center group hover:bg-zinc-50 transition-colors">
-                <div className="text-3xl font-bold text-zinc-900 font-mono tracking-tight">
+              <div key={i} className="px-4 sm:px-6 py-6 text-center group hover:bg-zinc-50 transition-colors">
+                <div className="text-2xl sm:text-3xl font-bold text-zinc-900 font-mono tracking-tight">
                   {stat.value}
                 </div>
-                <div className="text-sm text-zinc-400 mt-1 font-medium">{stat.label}</div>
+                <div className="text-sm text-zinc-500 mt-1 font-medium">{stat.label}</div>
               </div>
             ))}
           </div>
