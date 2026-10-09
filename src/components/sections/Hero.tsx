@@ -1,9 +1,37 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { ArrowRight, Play, Award, QrCode, CheckCircle2 } from "lucide-react";
 import { scrollToElement } from "@/lib/utils";
+
+const heroBackgrounds = [
+  {
+    id: "bay",
+    name: "Steel Bay",
+    src: "/images/hero/steel-bay.jpg",
+    description: "Modern industrial fabrication shop floor bay",
+  },
+  {
+    id: "welding",
+    name: "Welding Sparks",
+    src: "/images/hero/welding-sparks.jpg",
+    description: "Industrial AWS D1.1 welding sparks and dark steel atmosphere",
+  },
+  {
+    id: "framework",
+    name: "Framework",
+    src: "/images/hero/structural-framework.jpg",
+    description: "Geometric structural steel framework construction beams",
+  },
+  {
+    id: "coils",
+    name: "Mill Stock",
+    src: "/images/hero/steel-coils.jpg",
+    description: "Heavy industrial steel coils and mill material storage",
+  },
+];
 
 const heroSlides = [
   {
@@ -57,7 +85,9 @@ const fadeUp: Variants = {
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [currentBgIndex, setCurrentBgIndex] = useState(0);
 
+  // Auto-rotate text slides every 6 seconds (pauses on hover)
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
@@ -66,19 +96,45 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, [isPaused]);
 
+  // Auto-rotate backdrops every 5 seconds
+  useEffect(() => {
+    const bgInterval = setInterval(() => {
+      setCurrentBgIndex((prev) => (prev + 1) % heroBackgrounds.length);
+    }, 5000);
+    return () => clearInterval(bgInterval);
+  }, []);
+
+  const activeBg = heroBackgrounds[currentBgIndex];
+
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-zinc-50">
-      {/* Grid pattern background */}
-      <div className="absolute inset-0 grid-pattern opacity-60" />
+    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#070A0F]">
+      {/* Background Image with Smooth Cross-Fade Transition */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeBg.id}
+          initial={{ opacity: 0, scale: 1.02 }}
+          animate={{ opacity: 0.88, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.98 }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
+          className="absolute inset-0 pointer-events-none"
+        >
+          <Image
+            src={activeBg.src}
+            alt={activeBg.description}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center filter brightness-100 contrast-110"
+          />
+        </motion.div>
+      </AnimatePresence>
 
-      {/* Subtle gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-zinc-50/80" />
+      {/* Balanced Vignette & Overlay (enhances backdrop vibrancy while preserving crisp text readability) */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#070A0F]/65 via-[#070A0F]/45 to-[#070A0F]/95 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#070A0F]/75 via-transparent to-[#070A0F]/75 pointer-events-none" />
+      <div className="absolute inset-0 grid-pattern opacity-10 pointer-events-none" />
 
-      {/* Decorative line elements */}
-      <div className="absolute top-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-zinc-300 to-transparent opacity-60" />
-      <div className="absolute bottom-1/3 left-0 right-0 h-px bg-gradient-to-r from-transparent via-zinc-200 to-transparent opacity-40" />
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
         <div className="max-w-4xl mx-auto text-center">
           {/* Badge */}
           <motion.div
@@ -86,9 +142,9 @@ export default function Hero() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-zinc-300 bg-white text-xs font-medium text-zinc-500 uppercase tracking-widest mb-8 shadow-sm"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-zinc-700/80 bg-zinc-950/80 text-xs font-medium text-zinc-200 uppercase tracking-widest shadow-md backdrop-blur-md mb-8"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-slate-500 animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             Built for Structural &amp; Miscellaneous Steel Fabricators
           </motion.div>
 
@@ -107,13 +163,13 @@ export default function Hero() {
                 transition={{ duration: 0.45, ease: [0.21, 0.47, 0.32, 0.98] }}
                 className="flex flex-col items-center"
               >
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-zinc-900 leading-[1.08] tracking-tight text-balance">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.08] tracking-tight text-balance drop-shadow-md">
                   {heroSlides[currentSlide].titlePart1}
                   <br />
-                  <span className="text-zinc-400">{heroSlides[currentSlide].titlePart2}</span>
+                  <span className="text-zinc-300 drop-shadow-md">{heroSlides[currentSlide].titlePart2}</span>
                 </h1>
 
-                <p className="mt-6 text-base sm:text-lg lg:text-xl text-zinc-500 max-w-2xl mx-auto leading-relaxed">
+                <p className="mt-6 text-base sm:text-lg lg:text-xl text-zinc-200 max-w-2xl mx-auto leading-relaxed drop-shadow-sm font-medium">
                   {heroSlides[currentSlide].description}
                 </p>
               </motion.div>
@@ -127,11 +183,10 @@ export default function Hero() {
                 key={idx}
                 type="button"
                 onClick={() => setCurrentSlide(idx)}
-                className={`h-1.5 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-800 ${
-                  idx === currentSlide
-                    ? "w-8 bg-zinc-900"
-                    : "w-2 bg-zinc-300 hover:bg-zinc-400"
-                }`}
+                className={`h-1.5 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${idx === currentSlide
+                    ? "w-8 bg-white"
+                    : "w-2 bg-zinc-700 hover:bg-zinc-500"
+                  }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
             ))}
@@ -149,7 +204,7 @@ export default function Hero() {
               href="#demo"
               id="hero-cta-demo"
               onClick={(e) => scrollToElement("demo", e)}
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-zinc-900 text-white text-sm font-semibold rounded-md hover:bg-zinc-700 transition-all duration-200 shadow-sm group"
+              className="inline-flex items-center gap-2 px-6 py-3.5 bg-white text-zinc-950 text-sm font-semibold rounded-md hover:bg-zinc-200 transition-all duration-200 shadow-lg group"
             >
               Book a Shop Walkthrough
               <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
@@ -158,9 +213,9 @@ export default function Hero() {
               href="#modules"
               id="hero-cta-features"
               onClick={(e) => scrollToElement("modules", e)}
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-white text-zinc-700 text-sm font-semibold rounded-md border border-zinc-300 hover:bg-zinc-50 hover:border-zinc-400 transition-all duration-200"
+              className="inline-flex items-center gap-2 px-6 py-3.5 bg-zinc-900/90 text-zinc-200 text-sm font-semibold rounded-md border border-zinc-700 hover:bg-zinc-800 hover:border-zinc-500 transition-all duration-200 backdrop-blur-sm"
             >
-              <Play size={14} className="fill-zinc-500 text-zinc-500" />
+              <Play size={14} className="fill-zinc-400 text-zinc-400" />
               Explore Platform Modules
             </a>
           </motion.div>
@@ -174,17 +229,17 @@ export default function Hero() {
             className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-zinc-400"
           >
             <span className="flex items-center gap-1.5">
-              <Award size={13} className="text-slate-500" />
+              <Award size={13} className="text-emerald-400" />
               AISC 303 &amp; AWS D1.1 Ready
             </span>
-            <span className="w-px h-3 bg-zinc-300 hidden sm:inline" />
+            <span className="w-px h-3 bg-zinc-800 hidden sm:inline" />
             <span className="flex items-center gap-1.5">
-              <QrCode size={13} className="text-slate-500" />
+              <QrCode size={13} className="text-emerald-400" />
               Offline Mobile Shop Traveler
             </span>
-            <span className="w-px h-3 bg-zinc-300 hidden sm:inline" />
+            <span className="w-px h-3 bg-zinc-800 hidden sm:inline" />
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 size={13} className="text-slate-500" />
+              <CheckCircle2 size={13} className="text-emerald-400" />
               Tekla &amp; SDS/2 CSV Intake
             </span>
           </motion.div>
@@ -195,158 +250,56 @@ export default function Hero() {
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="mt-20 border border-zinc-200 rounded-xl bg-white shadow-sm overflow-hidden"
+          className="mt-20 border border-zinc-800/80 rounded-xl bg-zinc-900/80 backdrop-blur-md shadow-2xl overflow-hidden"
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-zinc-200 divide-y md:divide-y-0">
+          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-zinc-800 divide-y md:divide-y-0">
             {stats.map((stat, i) => (
-              <div key={i} className="px-4 sm:px-6 py-6 text-center group hover:bg-zinc-50 transition-colors">
-                <div className="text-2xl sm:text-3xl font-bold text-zinc-900 font-mono tracking-tight">
+              <div key={i} className="px-4 sm:px-6 py-6 text-center group hover:bg-zinc-800/40 transition-colors">
+                <div className="text-2xl sm:text-3xl font-bold text-white font-mono tracking-tight">
                   {stat.value}
                 </div>
-                <div className="text-sm text-zinc-500 mt-1 font-medium">{stat.label}</div>
+                <div className="text-sm text-zinc-400 mt-1 font-medium">{stat.label}</div>
               </div>
             ))}
           </div>
         </motion.div>
 
-        {/* Dashboard preview mockup */}
+        {/* Real FabSimple Dashboard Preview (Replacing simulated mockup) */}
         <motion.div
           initial={{ opacity: 0, y: 48 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }}
-          className="mt-12 relative"
+          className="mt-14 relative"
         >
-          <div className="rounded-xl border border-zinc-200 bg-white shadow-xl overflow-hidden">
-            {/* Window chrome */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-zinc-100 bg-zinc-50">
-              <div className="w-3 h-3 rounded-full bg-zinc-300" />
-              <div className="w-3 h-3 rounded-full bg-zinc-300" />
-              <div className="w-3 h-3 rounded-full bg-zinc-300" />
+          {/* Subtle glow behind preview */}
+          <div className="absolute -inset-1.5 bg-gradient-to-r from-blue-600/20 via-emerald-500/20 to-indigo-600/20 rounded-2xl blur-xl opacity-60 pointer-events-none" />
+
+          <div className="relative rounded-2xl border border-zinc-800 bg-[#0B1120] shadow-2xl overflow-hidden backdrop-blur-md">
+            {/* Window chrome header */}
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-zinc-800/80 bg-zinc-950/90">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                <div className="w-3 h-3 rounded-full bg-amber-500/80" />
+                <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
+              </div>
               <div className="flex-1 mx-4">
-                <div className="w-72 mx-auto h-5 bg-zinc-200 rounded-full text-[11px] font-mono text-zinc-500 flex items-center justify-center">
-                  app.fabsimple.io/dashboard/PRJ-2026-0001
+                <div className="max-w-md mx-auto h-6 bg-zinc-900 rounded-md text-[11px] font-mono text-zinc-400 flex items-center justify-center border border-zinc-800/80 gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  app.fabsimpleus.com/dashboard — Live MES Command Center
                 </div>
               </div>
             </div>
 
-            {/* Dashboard UI */}
-            <div className="bg-zinc-50 p-6">
-              <div className="grid grid-cols-12 gap-4 min-h-[360px]">
-                {/* Sidebar */}
-                <div className="col-span-12 md:col-span-3 lg:col-span-2 bg-zinc-900 rounded-lg p-3 space-y-1.5 text-left">
-                  <div className="text-[10px] font-semibold text-zinc-400 uppercase tracking-widest px-2 py-1">
-                    Novus Steel Demo
-                  </div>
-                  {[
-                    { name: "Live Activity", active: false },
-                    { name: "Projects", active: false },
-                    { name: "Tekla BOM Intake", active: false },
-                    { name: "Cut List & Nesting", active: false },
-                    { name: "Shop Traveler", active: true },
-                    { name: "QC & Weld Log", active: false },
-                    { name: "Heat Traceability", active: false },
-                    { name: "AIA G702 Billing", active: false },
-                  ].map((item) => (
-                    <div
-                      key={item.name}
-                      className={`px-2.5 py-1.5 rounded text-xs font-medium transition-colors ${
-                        item.active
-                          ? "bg-zinc-800 text-white font-semibold"
-                          : "text-zinc-400 hover:text-zinc-200"
-                      }`}
-                    >
-                      {item.name}
-                    </div>
-                  ))}
-                </div>
-
-                {/* Main content */}
-                <div className="col-span-12 md:col-span-9 lg:col-span-10 space-y-4 text-left">
-                  {/* Top KPIs */}
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                    {[
-                      { label: "Active Project", value: "320 Tons", sub: "Dallas Skyline Tower", highlight: "PRJ-2026-0001" },
-                      { label: "Piece Marks In Shop", value: "214 Pcs", sub: "148 Passed QC", highlight: "69% Complete" },
-                      { label: "MTR Heat Coverage", value: "100%", sub: "A992 / A500-C / A36", highlight: "Zero Missing Heats" },
-                      { label: "AIA G702 Draw #3", value: "$612,000", sub: "Contract Value $1.2M", highlight: "Approved by GC" },
-                    ].map((kpi) => (
-                      <div key={kpi.label} className="bg-white rounded-lg p-3.5 border border-zinc-200">
-                        <div className="text-[11px] text-zinc-400 font-medium">{kpi.label}</div>
-                        <div className="text-xl font-bold text-zinc-900 mt-1 font-mono">{kpi.value}</div>
-                        <div className="text-[11px] text-zinc-500 mt-1 flex justify-between">
-                          <span>{kpi.sub}</span>
-                          <span className="text-slate-600 font-mono font-medium">{kpi.highlight}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Production Station Pipeline */}
-                  <div className="bg-white rounded-lg border border-zinc-200 p-4">
-                    <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                      <div>
-                        <div className="text-xs font-semibold text-zinc-800">Shop Floor Station Flow — Phase 2 Release</div>
-                        <div className="text-[11px] text-zinc-400">Tekla Model Rev D · 48 assemblies releasing to fit-up</div>
-                      </div>
-                      <div className="flex gap-1.5 text-xs font-mono">
-                        <span className="px-2 py-0.5 rounded bg-zinc-900 text-white text-[11px]">Dallas Tower</span>
-                        <span className="px-2 py-0.5 rounded bg-zinc-100 text-zinc-600 text-[11px]">320.5 Tons</span>
-                      </div>
-                    </div>
-
-                    {/* Work Center Station Progress */}
-                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-2">
-                      {[
-                        { station: "Beam Line / CNC", count: "90 / 214 pcs", pct: 100, status: "Complete" },
-                        { station: "Fit-Up & Tack", count: "68 / 214 pcs", pct: 75, status: "In Progress" },
-                        { station: "AWS D1.1 Weld", count: "52 / 214 pcs", pct: 58, status: "Active" },
-                        { station: "SSPC Blast/Paint", count: "48 / 214 pcs", pct: 53, status: "4.2 mils DFT" },
-                        { station: "Staging / Ship", count: "20 / 214 pcs", pct: 22, status: "Load #4" },
-                      ].map((st) => (
-                        <div key={st.station} className="bg-zinc-50 rounded-md p-2.5 border border-zinc-100">
-                          <div className="text-[11px] font-semibold text-zinc-700 truncate">{st.station}</div>
-                          <div className="text-xs font-mono font-bold text-zinc-900 mt-1">{st.count}</div>
-                          <div className="w-full bg-zinc-200 rounded-full h-1.5 mt-2">
-                            <div className="bg-zinc-800 h-1.5 rounded-full" style={{ width: `${st.pct}%` }} />
-                          </div>
-                          <div className="text-[10px] text-zinc-400 mt-1.5 font-mono">{st.status}</div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Piece Marks Live Traveler Table */}
-                  <div className="bg-white rounded-lg border border-zinc-200 p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="text-xs font-semibold text-zinc-800">Live Piece Mark Travelers (QR Verified)</div>
-                      <span className="text-[11px] text-slate-600 font-mono">3-Tap Mobile Sync Active</span>
-                    </div>
-                    <div className="space-y-2">
-                      {[
-                        { mark: "W14x82-1044", asm: "A-204 Column", grade: "A992", heat: "HT-23845", length: "24'-6\"", station: "AWS D1.1 Weld", status: "CWI Pass" },
-                        { mark: "HSS6x6-0312", asm: "B-108 Brace", grade: "A500-C", heat: "HT-23846", length: "18'-0\"", station: "SSPC Paint", status: "4.1 mils DFT" },
-                        { mark: "PL 1\"x12\"-BP", asm: "BP-12 Base Plt", grade: "A36", heat: "HT-24109", length: "2'-4\"", station: "CNC Plate Table", status: "Cut Ready" },
-                      ].map((item) => (
-                        <div key={item.mark} className="flex flex-wrap items-center justify-between gap-2 p-2 rounded bg-zinc-50 border border-zinc-100 text-xs">
-                          <div className="flex items-center gap-2">
-                            <span className="font-mono font-bold text-zinc-900">{item.mark}</span>
-                            <span className="text-zinc-400">({item.asm})</span>
-                          </div>
-                          <div className="flex items-center gap-3 font-mono text-[11px] text-zinc-600">
-                            <span>{item.grade}</span>
-                            <span className="text-zinc-400">Heat: {item.heat}</span>
-                            <span>{item.length}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="px-2 py-0.5 rounded bg-zinc-200 text-zinc-700 text-[10px] font-medium">{item.station}</span>
-                            <span className="px-2 py-0.5 rounded bg-zinc-900 text-white text-[10px] font-mono">{item.status}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+            {/* Actual Dashboard Screenshot */}
+            <div className="relative w-full overflow-hidden bg-[#0F172A]">
+              <Image
+                src="/images/dashboard-preview.png"
+                alt="FabSimple MES Operating System — Owner & CEO Executive Control Center Dashboard"
+                width={1024}
+                height={541}
+                className="w-full h-auto block select-none"
+                priority
+              />
             </div>
           </div>
         </motion.div>

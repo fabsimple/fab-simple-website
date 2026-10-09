@@ -15,27 +15,37 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isPastHero, setIsPastHero] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const handleScroll = () => {
+      // Dark hero is min-h-screen; switch to light header after scrolling past ~70% of hero
+      const heroThreshold = window.innerHeight * 0.7;
+      setIsPastHero(window.scrollY > heroThreshold);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+        isPastHero
           ? "bg-white/95 backdrop-blur-md border-b border-zinc-200 shadow-sm"
-          : "bg-transparent"
+          : "bg-[#070A0F]/75 backdrop-blur-md border-b border-white/10"
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between" aria-label="Main Navigation">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group" aria-label="FabSimple Home">
-          <div className="w-8 h-8 bg-zinc-900 rounded-sm flex items-center justify-center">
+          <div
+            className={`w-8 h-8 rounded-sm flex items-center justify-center transition-colors ${
+              isPastHero ? "bg-zinc-900" : "bg-zinc-800/90 border border-zinc-700/80 shadow-sm"
+            }`}
+          >
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <rect x="2" y="2" width="6" height="6" fill="white" opacity="0.9" />
               <rect x="10" y="2" width="6" height="6" fill="white" opacity="0.5" />
@@ -43,8 +53,12 @@ export default function Navbar() {
               <rect x="10" y="10" width="6" height="6" fill="white" opacity="0.9" />
             </svg>
           </div>
-          <span className="text-zinc-900 font-semibold text-lg tracking-tight">
-            Fab<span className="text-zinc-500">Simple</span>
+          <span
+            className={`font-semibold text-lg tracking-tight transition-colors ${
+              isPastHero ? "text-zinc-900" : "text-white"
+            }`}
+          >
+            Fab<span className={isPastHero ? "text-zinc-500" : "text-zinc-400"}>Simple</span>
           </span>
         </Link>
 
@@ -55,7 +69,11 @@ export default function Navbar() {
               <a
                 href={link.href}
                 onClick={(e) => scrollToElement(link.href.replace("#", ""), e)}
-                className="px-4 py-2 text-sm font-medium text-zinc-600 hover:text-zinc-900 rounded-md hover:bg-zinc-100 transition-all duration-150"
+                className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-150 ${
+                  isPastHero
+                    ? "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100"
+                    : "text-zinc-300 hover:text-white hover:bg-white/10"
+                }`}
               >
                 {link.label}
               </a>
@@ -69,14 +87,20 @@ export default function Navbar() {
             href="https://app.fabsimpleus.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
+            className={`text-sm font-medium transition-colors ${
+              isPastHero ? "text-zinc-600 hover:text-zinc-900" : "text-zinc-300 hover:text-white"
+            }`}
           >
             Sign in
           </a>
           <a
             href="#demo"
             onClick={(e) => scrollToElement("demo", e)}
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold bg-zinc-900 text-white rounded-md hover:bg-zinc-700 transition-colors"
+            className={`inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-md transition-colors shadow-sm ${
+              isPastHero
+                ? "bg-zinc-900 text-white hover:bg-zinc-700"
+                : "bg-white text-zinc-950 hover:bg-zinc-100"
+            }`}
           >
             Book a Demo
             <ChevronRight size={14} />
@@ -85,7 +109,9 @@ export default function Navbar() {
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden p-2 rounded-md text-zinc-600 hover:bg-zinc-100"
+          className={`md:hidden p-2 rounded-md transition-colors ${
+            isPastHero ? "text-zinc-600 hover:bg-zinc-100" : "text-zinc-200 hover:bg-white/10"
+          }`}
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
         >
@@ -100,7 +126,11 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-b border-zinc-200"
+            className={`md:hidden border-b transition-colors ${
+              isPastHero
+                ? "bg-white border-zinc-200"
+                : "bg-[#0B1120]/95 backdrop-blur-xl border-zinc-800"
+            }`}
           >
             <div className="px-4 py-4 space-y-1">
               {navLinks.map((link) => (
@@ -111,18 +141,28 @@ export default function Navbar() {
                     setMobileOpen(false);
                     scrollToElement(link.href.replace("#", ""), e);
                   }}
-                  className="block px-4 py-2.5 text-sm font-medium text-zinc-700 rounded-md hover:bg-zinc-50"
+                  className={`block px-4 py-2.5 text-sm font-medium rounded-md transition-colors ${
+                    isPastHero
+                      ? "text-zinc-700 hover:bg-zinc-50"
+                      : "text-zinc-200 hover:bg-white/10"
+                  }`}
                 >
                   {link.label}
                 </a>
               ))}
-              <div className="pt-3 border-t border-zinc-100 mt-3 flex flex-col gap-2">
+              <div
+                className={`pt-3 border-t mt-3 flex flex-col gap-2 ${
+                  isPastHero ? "border-zinc-100" : "border-zinc-800"
+                }`}
+              >
                 <a
                   href="https://app.fabsimpleus.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setMobileOpen(false)}
-                  className="block px-4 py-2.5 text-sm font-medium text-zinc-600"
+                  className={`block px-4 py-2.5 text-sm font-medium ${
+                    isPastHero ? "text-zinc-600" : "text-zinc-300 hover:text-white"
+                  }`}
                 >
                   Sign in
                 </a>
@@ -132,7 +172,11 @@ export default function Navbar() {
                     setMobileOpen(false);
                     scrollToElement("demo", e);
                   }}
-                  className="block px-4 py-2.5 text-sm font-semibold bg-zinc-900 text-white rounded-md text-center"
+                  className={`block px-4 py-2.5 text-sm font-semibold rounded-md text-center transition-colors ${
+                    isPastHero
+                      ? "bg-zinc-900 text-white"
+                      : "bg-white text-zinc-950 hover:bg-zinc-100"
+                  }`}
                 >
                   Book a Demo
                 </a>
