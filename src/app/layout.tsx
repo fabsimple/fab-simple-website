@@ -31,6 +31,9 @@ export const metadata: Metadata = {
     "steel shop floor traveler",
   ],
   authors: [{ name: "FabSimple Technologies" }],
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+  },
   openGraph: {
     title: "FabSimple — Structural Steel Fabrication Management Software",
     description:

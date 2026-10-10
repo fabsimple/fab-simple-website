@@ -100,7 +100,7 @@ export default function Hero() {
   useEffect(() => {
     const bgInterval = setInterval(() => {
       setCurrentBgIndex((prev) => (prev + 1) % heroBackgrounds.length);
-    }, 5000);
+    }, 10000);
     return () => clearInterval(bgInterval);
   }, []);
 
@@ -145,7 +145,7 @@ export default function Hero() {
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-zinc-700/80 bg-zinc-950/80 text-xs font-medium text-zinc-200 uppercase tracking-widest shadow-md backdrop-blur-md mb-8"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            Built for Structural &amp; Miscellaneous Steel Fabricators
+            Built for Structural Steel Fabricators
           </motion.div>
 
           {/* Rotating Headline & Description Carousel */}
@@ -184,8 +184,8 @@ export default function Hero() {
                 type="button"
                 onClick={() => setCurrentSlide(idx)}
                 className={`h-1.5 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${idx === currentSlide
-                    ? "w-8 bg-white"
-                    : "w-2 bg-zinc-700 hover:bg-zinc-500"
+                  ? "w-8 bg-white"
+                  : "w-2 bg-zinc-700 hover:bg-zinc-500"
                   }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
