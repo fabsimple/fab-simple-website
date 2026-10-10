@@ -10,7 +10,8 @@ const navLinks = [
   { label: "Why FabSimple", href: "#features" },
   { label: "Modules", href: "#modules" },
   { label: "How It Works", href: "#how-it-works" },
-  { label: "Customer Stories", href: "#testimonials" },
+  { label: "About", href: "#about" },
+  { label: "Capabilities", href: "#testimonials" },
   { label: "Pricing", href: "#pricing" },
 ];
 

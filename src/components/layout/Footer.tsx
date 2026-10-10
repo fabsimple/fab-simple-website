@@ -46,8 +46,8 @@ const footerLinks: FooterCategory[] = [
   {
     category: "Company",
     links: [
-      { label: "About FabSimple", href: "#" },
-      { label: "Customer Stories", href: "#testimonials" },
+      { label: "About FabSimple", href: "#about" },
+      { label: "Capabilities", href: "#testimonials" },
       { label: "Security & Architecture", href: "#" },
       { label: "Contact Engineering", href: "#contact" },
       { label: "Partner Network", href: "#" },
